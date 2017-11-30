@@ -21,6 +21,10 @@
     border-radius: 0px;
 }
 
+.navbar-btn-a {
+    padding: 0px !important;
+}
+
 .avatar-normal {
     width: 60px;
     height: auto;

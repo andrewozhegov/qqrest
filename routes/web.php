@@ -18,16 +18,16 @@ Route::group(['middleware'=>'web'], function() {
     Route::get('/', ['as'=>'index', 'uses'=>'IndexController@show']);
 
     Route::get('/about', ['as'=>'about', 'uses'=>'AboutController@show']);
-    Route::get('/about', ['as'=>'about_rev', 'uses'=>'AboutController@review']); // комментарий
+    Route::post('/about', ['as'=>'about_rev', 'uses'=>'AboutController@review']); // комментарий
 
     Route::get('/menu', ['as'=>'menu', 'uses'=>'MenuController@show']);
     Route::post('/menu', ['as'=>'add_product', 'uses'=>'MenuController@add']); // добавить в корзину
 
     Route::get('/table', ['as'=>'table', 'uses'=>'TableController@show']);
-    Route::get('/table', ['as'=>'table_res', 'uses'=>'TableController@reserve']); // бронь столика
+    Route::post('/table', ['as'=>'table_res', 'uses'=>'TableController@reserve']); // бронь столика
 
     Route::get('/event', ['as'=>'event', 'uses'=>'EventController@show']);
-    Route::get('/event', ['as'=>'event_res', 'uses'=>'EventController@reserve']); // зарезервировать мероприятие
+    Route::post('/event', ['as'=>'event_res', 'uses'=>'EventController@reserve']); // зарезервировать мероприятие
 
     Route::resource('/cart', 'CartController', ['only' => ['index', 'store', 'destroy']]);
 

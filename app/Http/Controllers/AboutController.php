@@ -8,7 +8,7 @@ class AboutController extends Controller
 {
     public function show()
     {
-        return view('welcome');
+        return view('about');
     }
 
     public function review(Request $request)

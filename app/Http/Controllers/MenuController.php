@@ -8,7 +8,7 @@ class MenuController extends Controller
 {
     public function show()
     {
-        return view('welcome');
+        return view('menu');
     }
 
     public function add(Request $request)

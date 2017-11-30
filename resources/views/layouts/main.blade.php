@@ -3,7 +3,6 @@
 <head>
     <meta charset="utf-8">
     <title>@yield('page_name') - Ресторан QQ</title>
-    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -17,17 +16,18 @@
     <nav class="navbar navbar-inverse ">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="index.html">QQ</a>
+                <a class="navbar-brand" href="/">QQ</a>
             </div>
             <ul class="nav navbar-nav">
-                <li class="active"><a href="/index">Главная страница</a></li>
+                <li class="active"><a href="/">Главная страница</a></li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">О нас
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="/about">Page 1-1</a></li>
-                        <li><a href="/about">Page 1-2</a></li>
-                        <li><a href="/about">Page 1-3</a></li>
+                        <li><a href="/about">Филлиалы</a></li>
+                        <li><a href="/about">Достижения</a></li>
+                        <li><a href="/about">Достижения</a></li>
+                        <li><a href="/about">Отзывы</a></li>
                     </ul>
                 </li>
                 <li><a href="/menu">Меню</a></li>
@@ -35,10 +35,10 @@
                 <li><a href="/event">Мероприятие</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
+                <li><a class="navbar-btn-a" href="/cart"><button class="btn btn-success navbar-btn"><span class="glyphicon glyphicon-shopping-cart"></span> Корзина</button></a></li>
                 <!-- если не авторизирован -->
                 @if(Auth::check())
                     <li><img class="navbar-img img-circle" src="images/ava.jpg" alt="Имя пользователя" /></li>
-                    <li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Имя Фамилия
                             <span class="caret"></span></a>
@@ -58,6 +58,11 @@
 
 <main>
     @yield('content')
+
+    <section>
+        <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3Abe569007edac4aaf6f5c4ea61a7faac0774a10a0a4c2490796b98eba58c275a0&amp;width=100%25&amp;height=400&amp;lang=ru_RU&amp;scroll=true"></script>
+    </section>
+
 </main>
 
 <footer>

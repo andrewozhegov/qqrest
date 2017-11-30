@@ -8,7 +8,7 @@ class TableController extends Controller
 {
     public function show()
     {
-        return view('welcome');
+        return view('table');
     }
 
     public function reserve(Request $request)

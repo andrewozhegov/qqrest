@@ -8,7 +8,7 @@ class EventController extends Controller
 {
     public function show()
     {
-        return view('welcome');
+        return view('event');
     }
 
     public function reserve(Request $request)
