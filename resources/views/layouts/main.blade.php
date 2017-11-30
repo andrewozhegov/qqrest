@@ -40,7 +40,7 @@
                 @if(Auth::check())
                     <li><img class="navbar-img img-circle" src="images/ava.jpg" alt="Имя пользователя" /></li>
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Имя Фамилия
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ Auth::user()->name }}
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="/profile">Профиль</a></li>
@@ -48,10 +48,8 @@
                             <li>
                                 <a href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                    Выйти
+                                            document.getElementById('logout-form').submit();">Выйти
                                 </a>
-
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                     {{ csrf_field() }}
                                 </form>
