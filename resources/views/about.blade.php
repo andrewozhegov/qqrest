@@ -16,152 +16,132 @@
             <img src="images/article.png"/>
         </div>
 
-        <section>
-            <h1 class="text-center">ФИЛЛИАЛЫ</h1>
-            <div class="row text-center">
-                <div class="col-sm-4">
-                    <div class="thumbnail">
-                        <img src="images/ava.jpg" alt="Paris" width="400" height="300">
-                        <div class="">
-                            <p><strong>Paris</strong></p>
-                            <p>Friday 27 November 2015</p>
-                        </div>
+        @if(count($branches) > 0)
+            <section>
+                <h1 class="text-center">ФИЛЛИАЛЫ</h1>
+                <div class="row text-center">
+                    @foreach($branches as $branch)
+                        <div class="col-sm-4">
+                            <div class="thumbnail">
+                                <img src="{{ $branch->image() }}" alt="{{ $branch->name }}" width="400" height="300">
+                                <div class="">
+                                    <p><strong>{{ $branch->name }}</strong></p>
+                                    <p>{{ $branch->address }}</p>
+                                </div>
 
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="thumbnail">
-                        <img src="images/ava.jpg" alt="New York" width="400" height="300">
-                        <div>
-                            <p><strong>Paris</strong></p>
-                            <p>Friday 27 November 2015</p>
+                            </div>
                         </div>
-                    </div>
+                    @endforeach
                 </div>
-                <div class="col-sm-4">
-                    <div class="thumbnail">
-                        <img src="images/ava.jpg" alt="San Francisco" width="400" height="300">
-                        <div>
-                            <p><strong>Paris</strong></p>
-                            <p>Friday 27 November 2015</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+            </section>
+        @endif
 
-        <section>
-            <h1 class="text-center">ОБСЛУЖИВАНИЕ КЛИЕНТОВ</h1>
+        @if(count($services) > 0)
+            <section>
+                <h1 class="text-center">ОБСЛУЖИВАНИЕ КЛИЕНТОВ</h1>
 
-            <div class="container row">
-                <div class="col-md-6 col-sm-12">
 
+                <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators display-hidden">
+                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#myCarousel" data-slide-to="1"></li>
+                        <li data-target="#myCarousel" data-slide-to="2"></li>
+                    </ol>
+
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner heigdht-800">
+                        @foreach($services as $service)
+                            <div class="item @if ($service->id == 1) active @endif">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12">
+                                        <img src="{{ $service->image() }}" alt="{{ $service->title }}" style="width:100%;">
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <h3 class="text-right">{{ $branch->title }}</h3>
+                                        <p class="text-right">{{ $branch->text }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                    <!-- Left and right controls
+                    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                        <span class="sr-only">Next</span>
+                    </a>-->
+                    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                        <h3 class="text-right">{{ $branch->title }}</h3>
+                        <p class="text-right">{{ $branch->text }}</p>
+                    </a>
                 </div>
-                <div class="col-md-6 col-sm-12">
-                    <p class="text-right">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    </p>
-                </div>
-            </div>
+            </section>
+        @endif
 
-        </section>
-
-        <section>
-            <h1 class="text-center">НАШИ ПОБЕДЫ</h1>
-            <div class="row text-center">
-                <div class="col-sm-4">
-                    <div class="thumbnail">
-                        <img src="images/ava.jpg" alt="Paris" width="400" height="300">
-                        <div class="">
-                            <br />
-                            <p>Оскар</p>
+        @if(count($services) > 0)
+            <section>
+                <h1 class="text-center">НАШИ ПОБЕДЫ</h1>
+                <div class="row text-center">
+                    @foreach($awards as $award)
+                        <div class="col-sm-4">
+                            <div class="thumbnail">
+                                <img src="{{ $award->image() }}" alt="{{ $award->name }}" width="400" height="300">
+                                <div class="">
+                                    <br />
+                                    <p><strong>{{ $award->name }}</strong></p>
+                                </div>
+                            </div>
                         </div>
+                    @endforeach
+                </div>
+            </section>
+        @endif
 
+        @if(count($staffs) > 0)
+            <section>
+                <h1 class="text-center">ПЕРСОНАЛ</h1>
+                <div class="container text-center">
+                    <div class="row">
+                        @foreach($staffs as $staff)
+                            <div class="col-sm-4">
+                                <a href="#demo{{ $staff->id }}" data-toggle="collapse">
+                                    <img src="{{ $staff->image() }}" class="img-circle person" alt="{{ $staff->name }}" width="255" height="255">
+                                </a>
+                                <div id="demo{{ $staff->id }}" class="collapse">
+                                    <strong>{{ $staff->name }}</strong>
+                                    <p>{{ $staff->role->name }}</p>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
-                <div class="col-sm-4">
-                    <div class="thumbnail">
-                        <img src="images/ava.jpg" alt="New York" width="400" height="300">
-                        <div>
-                            <p><strong>Paris</strong></p>
-                            <p>Friday 27 November 2015</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="thumbnail">
-                        <img src="images/ava.jpg" alt="San Francisco" width="400" height="300">
-                        <div>
-                            <p><strong>Paris</strong></p>
-                            <p>Friday 27 November 2015</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <h1 class="text-center">ПЕРСОНАЛ</h1>
-            <div class="container text-center">
-                <p><em>We love music!</em></p>
-                <p>We have created a fictional band website. Lorem ipsum..</p>
-                <br>
-                <div class="row">
-                    <div class="col-sm-4">
-                        <p class="text-center"><strong>Name</strong></p><br>
-                        <a href="#demo" data-toggle="collapse">
-                            <img src="images/ava.jpg" class="img-circle person" alt="Random Name" width="255" height="255">
-                        </a>
-                        <div id="demo" class="collapse">
-                            <p>Guitarist and Lead Vocalist</p>
-                            <p>Loves long walks on the beach</p>
-                            <p>Member since 1988</p>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <p class="text-center"><strong>Name</strong></p><br>
-                        <a href="#demo2" data-toggle="collapse">
-                            <img src="images/ava.jpg" class="img-circle person" alt="Random Name" width="255" height="255">
-                        </a>
-                        <div id="demo2" class="collapse">
-                            <p>Drummer</p>
-                            <p>Loves drummin'</p>
-                            <p>Member since 1988</p>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <p class="text-center"><strong>Name</strong></p><br>
-                        <a href="#demo3" data-toggle="collapse">
-                            <img src="images/ava.jpg" class="img-circle person" alt="Random Name" width="255" height="255">
-                        </a>
-                        <div id="demo3" class="collapse">
-                            <p>Bass player</p>
-                            <p>Loves math</p>
-                            <p>Member since 2005</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+            </section>
+        @endif
 
         <section>
-            <!-- Отзывы -->
-            <div class="media">
-                <div class="media-left">
-                    <img src="images/ava.jpg" class="img-circle media-object" alt="Имя пользователя" style="width:60px">
+            @foreach($reviews as $review)
+                <div class="media">
+                    <div class="media-left">
+                        <img src="{{ $review->user->image() }}" class="img-circle media-object" alt="" style="width:60px">
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">{{ $review->user->name }}</h4>
+                        <p>{{ $review->text }}</p>
+                        <h6>{{ $review->created_at }}</h6>
+                    </div>
                 </div>
-                <div class="media-body">
-                    <h4 class="media-heading">Имя Фамилия</h4>
-                    <p>The biggest problem most people face in learning a new language is their own fear.</p>
-                    <h6>28.11.2017</h6>
-                </div>
-            </div>
+            @endforeach
+
             @if(Auth::check())
-                <form>
+                <form enctype="multipart/form-data" class="form-horizontal" method="post">
+                    {{ csrf_field() }}
                     <div class="form-group">
                         <label for="comment">Оставить комментарий:</label>
-                        <textarea class="form-control" rows="3" id="comment"></textarea>
-
+                        <textarea class="form-control" rows="3" name="comment"></textarea>
                     </div>
                     <button type="submit" class="btn btn-default">Отправить</button>
                 </form>

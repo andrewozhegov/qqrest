@@ -8,6 +8,8 @@ class Branch extends Model
 {
     protected $table = 'branches';
 
+    protected $fillable = ['name', 'address', 'image', 'img_big'];
+
     public function reservations () {
         return $this->hasMany('App\Reservation', 'branch_id', 'id');
     }
@@ -19,5 +21,13 @@ class Branch extends Model
     public function board ()
     {
         return $this->hasOne('App\BranchBoard', 'branch_id', 'id');
+    }
+
+    public function image() {
+        return 'storage/'.$this->image;
+    }
+
+    public function img_big() {
+        return 'storage/'.$this->img_big;
     }
 }
