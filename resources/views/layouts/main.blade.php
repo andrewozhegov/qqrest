@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>@yield('page_name') - Ресторан QQ</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('/css/style.css') }}">
@@ -35,16 +36,15 @@
                 <li><a href="/event">Мероприятие</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a class="navbar-btn-a" href="/cart"><button class="btn btn-success navbar-btn"><span class="glyphicon glyphicon-shopping-cart"></span> Корзина</button></a></li>
                 <!-- если не авторизирован -->
                 @if(Auth::check())
-                    <li><img class="navbar-img img-circle" src="images/ava.jpg" alt="Имя пользователя" /></li>
+                    <li><img class="navbar-img img-circle" src="{{ asset(Auth::user()->image()) }}" alt="{{ Auth::user()->name }}" /></li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ Auth::user()->name }}
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="/profile">Профиль</a></li>
-                            <li><a href="/merge/news">Управление</a></li>
+                            <li><a href="/manage/news">Управление</a></li>
                             <li>
                                 <a href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
@@ -59,6 +59,7 @@
                 @else
                     <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Войти</a></li>
                 @endif
+                <li><a class="navbar-btn-a" href="/cart"><button class="btn btn-success navbar-btn"><span class="glyphicon glyphicon-shopping-cart"></span> Корзина <span class="badge" id="cart">10</span></button></a></li>
             </ul>
         </div>
     </nav>

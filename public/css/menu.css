@@ -2,6 +2,7 @@
     display: block;
     margin: 0 auto;
     list-style-type: none;
+    width: max-content;
 }
 .menu a {
     display: block;
@@ -88,6 +89,10 @@
 .menu .children a:hover, .menu .children a:focus {
     color: #333;
     background-color: #f9f9f9;
+}
+
+.clearfix {
+    padding: 0px;
 }
 
 .clearfix:after {
