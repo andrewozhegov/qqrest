@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reservation extends Model
 {
-    protected $table = 'reservation';
+    protected $table = 'reservations';
+
+    protected $fillable = ['client_name', 'client_phone', 'date_time'];
 
     public function branch () {
         return $this->belongsTo('App\Branch', 'brunch_id', 'id');

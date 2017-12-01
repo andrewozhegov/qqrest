@@ -8,7 +8,9 @@ class ProductType extends Model
 {
     protected $table = 'product_types';
 
+    protected $fillable = ['type_name'];
+
     public function products () {
-        return $this->hasMany('App\Product', 'product_id', 'id');
+        return $this->hasMany('App\Product', 'product_type_id', 'id');
     }
 }

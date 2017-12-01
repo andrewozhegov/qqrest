@@ -59,7 +59,7 @@
                 @else
                     <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Войти</a></li>
                 @endif
-                <li><a class="navbar-btn-a" href="/cart"><button class="btn btn-success navbar-btn"><span class="glyphicon glyphicon-shopping-cart"></span> Корзина <span class="badge" id="cart">10</span></button></a></li>
+                <li><a class="navbar-btn-a" href="/cart"><button class="btn btn-success navbar-btn"><span class="glyphicon glyphicon-shopping-cart"></span> Корзина <span class="badge" id="cart">{{ Session::get('cart.count', 0) }}</span></button></a></li>
             </ul>
         </div>
     </nav>

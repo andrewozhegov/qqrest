@@ -7,6 +7,42 @@
 @endsection
 
 @section('js')
+    <script>
+        $(document).ready(function() {
+            $("#myInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#myDIV div").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+
+    <script>
+        $(function() {
+            $('.button-to-cart').on('click', function() {
+                var $product_id = $(this);
+                $.ajax({
+                    url: 'cart',
+                    type: "POST",
+                    data: {
+                        product_id: $product_id.attr('data-to-cart')
+                    },
+                    headers: {
+                        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (count) {
+                        $('#cart').html(count);
+                        alert('Товар добавлен в корзину!');
+                    },
+                    error: function () {
+                        alert('Не удалось добавить товар в корзину!');
+                    }
+                });
+            });
+        });
+    </script>
+
 @endsection
 
 @section('content')
@@ -31,64 +67,38 @@
                 <li><a href="">ДЕСЕРТЫ</a></li>
             </ul>
         </section>
-        <div class="row text-center menu-items">
-            <div class="col-sm-3">
-                <div class="thumbnail">
-                    <img src="images/ava.jpg" alt="Paris" width="400">
-                    <div class="">
-                        <p><strong>Paris</strong></p>
-                        <p>Friday 27 November 2015</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-3">
-                <div class="thumbnail">
-                    <img src="images/ava.jpg" alt="Paris" width="400">
-                    <div class="">
-                        <p><strong>Paris</strong></p>
-                        <p>Friday 27 November 2015</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-3">
-                <div class="thumbnail">
-                    <img src="images/ava.jpg" alt="Paris" width="400">
-                    <div class="">
-                        <p><strong>Paris</strong></p>
-                        <p>Friday 27 November 2015</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-3">
-                <div class="thumbnail">
-                    <img src="images/ava.jpg" alt="Paris" width="400">
-                    <div class="">
-                        <p><strong>Paris</strong></p>
-                        <p>Friday 27 November 2015</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-3">
-                <div class="thumbnail">
-                    <img src="images/ava.jpg" alt="Paris" width="400">
-                    <div class="">
-                        <p><strong>Paris</strong></p>
-                        <p>Friday 27 November 2015</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-3">
-                <div class="thumbnail">
-                    <img src="images/ava.jpg" alt="Paris" width="400">
-                    <div class="">
-                        <p><strong>Paris</strong></p>
-                        <p>Friday 27 November 2015</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
+        <div class="article-menu">
+            <h1> М Е Н Ю</h1>
+            <br />
+            <input  class="form-control" id="myInput" type="text" placeholder="Search..">
+        </div>
+
+        <section>
+            <div class="container">
+                <div id="myDIV" class="row text-center menu-items">
+                    @foreach($products as $product)
+                        <div class="col-sm-3">
+                            <div class="thumbnail">
+                                <img src="{{ $product->image() }}" alt="" width="400">
+                                <div class="">
+                                    <p><strong>{{ $product->name }}</strong></p>
+                                    <p>Тип: {{ $product->type->type_name }}</p>
+                                    <h4>Цена: {{ $product->price }} р.</h4>
+                                    <button type="button" class="btn btn-success navbar-btn button-to-cart" data-to-cart="{{ $product->id }}">
+                                        <span class="glyphicon glyphicon-shopping-cart"></span>
+                                        В корзину
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
+        </section>
+    </div>
 
     <div class="container">
         <div id="myCarousel" class="carousel slide" data-ride="carousel">

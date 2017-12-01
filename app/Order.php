@@ -8,6 +8,8 @@ class Order extends Model
 {
     protected $table = 'orders';
 
+    protected $fillable = ['price', 'done'];
+
     public function events () {
         return $this->hasMany('App\Event', 'order_id', 'id');
     }

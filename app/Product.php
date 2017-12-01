@@ -8,6 +8,8 @@ class Product extends Model
 {
     protected $table = 'products';
 
+    protected $fillable = ['name', 'count', 'price', 'image', 'text'];
+
     public function board ()
     {
         return $this->hasOne('App\ProductBoard', 'product_id', 'id');
@@ -19,6 +21,10 @@ class Product extends Model
 
     public function orders ()
     {
-        return $this->belongsToMany('App\Order', 'products_orders', 'product_id', 'order_id')->withTimestamps();;
+        return $this->belongsToMany('App\Order', 'products_orders', 'product_id', 'order_id')->withTimestamps();
+    }
+
+    public function image() {
+        return 'storage/'.$this->image;
     }
 }

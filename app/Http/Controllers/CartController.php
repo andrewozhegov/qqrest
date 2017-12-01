@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Product;
 use Illuminate\Http\Request;
+
+use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
@@ -13,7 +16,12 @@ class CartController extends Controller
      */
     public function index() // +
     {
-        return view('cart');
+        // отправить только те продукты, которые есть в массиве
+
+        return view('cart', [
+            'cart' => Session::get('cart'),
+            'products' => Product::all(),
+        ]);
     }
 
     /**
@@ -34,7 +42,16 @@ class CartController extends Controller
      */
     public function store(Request $request) // добавление в корзину нового продукта
     {
-        // принимаем ид нового элемента и ид корзины и сохраняем, далее возвращаем предыдущий вид
+        if($request->ajax()) {
+            $path = 'cart.'.$request->get('product_id');
+            $count = Session::pull($path);
+            $count_all = Session::pull('cart.count');
+
+            $request->session()->put($path, ++$count);
+            $request->session()->put('cart.count', ++$count_all);
+
+            return Session::get('cart.count');
+        }
     }
 
     /**
