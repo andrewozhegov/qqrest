@@ -18,30 +18,7 @@
         });
     </script>
 
-    <script>
-        $(function() {
-            $('.button-to-cart').on('click', function() {
-                var $product_id = $(this);
-                $.ajax({
-                    url: 'cart',
-                    type: "POST",
-                    data: {
-                        product_id: $product_id.attr('data-to-cart')
-                    },
-                    headers: {
-                        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function (count) {
-                        $('#cart').html(count);
-                        alert('Товар добавлен в корзину!');
-                    },
-                    error: function () {
-                        alert('Не удалось добавить товар в корзину!');
-                    }
-                });
-            });
-        });
-    </script>
+    <script src="js/cart.js"></script>
 
 @endsection
 
@@ -85,7 +62,7 @@
                                     <p><strong>{{ $product->name }}</strong></p>
                                     <p>Тип: {{ $product->type->type_name }}</p>
                                     <h4>Цена: {{ $product->price }} р.</h4>
-                                    <button type="button" class="btn btn-success navbar-btn button-to-cart" data-to-cart="{{ $product->id }}">
+                                    <button type="button" class="btn btn-success navbar-btn button-to-cart" data-to-cart="{{ $product->id }}" data-count-of="plus">
                                         <span class="glyphicon glyphicon-shopping-cart"></span>
                                         В корзину
                                     </button>

@@ -16,11 +16,26 @@ class CartController extends Controller
      */
     public function index() // +
     {
-        // отправить только те продукты, которые есть в массиве
+        //Session::flush();
+
+        $cart = Session::get('cart');
+        $cart_products = [];
+
+        if($cart != null) {
+            $keys = array_keys($cart);
+            $products = Product::all();
+
+            foreach($products as $item) {
+                if(in_array($item->id, $keys)) array_push($cart_products, $item);
+            }
+        }
+
+        //dump($cart);
+        //dump($cart_products);
 
         return view('cart', [
-            'cart' => Session::get('cart'),
-            'products' => Product::all(),
+            'cart' => $cart,
+            'products' => $cart_products,
         ]);
     }
 
@@ -40,17 +55,46 @@ class CartController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) // добавление в корзину нового продукта
+    public function store(Request $request)
     {
         if($request->ajax()) {
+
             $path = 'cart.'.$request->get('product_id');
             $count = Session::pull($path);
             $count_all = Session::pull('cart.count');
 
-            $request->session()->put($path, ++$count);
-            $request->session()->put('cart.count', ++$count_all);
+            if ($request->get('count') == "plus") {
+                $request->session()->put($path, ++$count);
+                $request->session()->put('cart.count', ++$count_all);
+            } elseif ($request->get('count') == "minus") {
+                $request->session()->put($path, --$count);
+                $request->session()->put('cart.count', --$count_all);
+            }
 
-            return Session::get('cart.count');
+            $cart = Session::get('cart');
+            $cart_count = 0;
+
+            if($cart != null) {
+                $keys = array_keys($cart);
+                $products = Product::all();
+
+                foreach($products as $item) {
+                    if(in_array($item->id, $keys)) $cart_count += $item->price * $cart[$item->id];
+                }
+            }
+
+            $request->session()->put('cart.price', $cart_count);
+
+            //------------
+
+            $resp = [
+                'product_id' => $request->get('product_id'),
+                'count' => $count,
+                'count_all' => Session::get('cart.count'),
+                'cart_count' => $cart_count
+            ];
+
+            return $resp;
         }
     }
 
