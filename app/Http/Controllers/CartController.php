@@ -30,9 +30,6 @@ class CartController extends Controller
             }
         }
 
-        //dump($cart);
-        //dump($cart_products);
-
         return view('cart', [
             'cart' => $cart,
             'products' => $cart_products,
@@ -64,12 +61,14 @@ class CartController extends Controller
             $count_all = Session::pull('cart.count');
 
             if ($request->get('count') == "plus") {
-                $request->session()->put($path, ++$count);
-                $request->session()->put('cart.count', ++$count_all);
-            } elseif ($request->get('count') == "minus") {
-                $request->session()->put($path, --$count);
-                $request->session()->put('cart.count', --$count_all);
+                ++$count;
+                ++$count_all;
+            } elseif ($request->get('count') == "minus" && $count > 0) {
+                --$count;
+                --$count_all;
             }
+            $request->session()->put($path, $count);
+            $request->session()->put('cart.count', $count_all);
 
             $cart = Session::get('cart');
             $cart_count = 0;

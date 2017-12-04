@@ -62,6 +62,7 @@
                   </tbody>
               </table>
             <h1>Итог: <my id="res">{{ Session::get('cart.price', 0) }}</my> р.</h1>
+            <h5>Ваша заявка будет рассмотрена в течение 15 минут!</h5>
             <div class="container">
                 <form enctype="multipart/form-data" class="form-horizontal" method="post">
                     {{ csrf_field() }}
@@ -82,7 +83,6 @@
                             <button type="submit" class="btn btn-default">Отправить заявку</button>
                         {{--</div>--}}
                     </div>
-
                 </form>
             </div>
 
