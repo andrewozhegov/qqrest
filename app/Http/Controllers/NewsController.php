@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 use App\News;
+use App\Notify;
 
 class NewsController extends Controller
 {
@@ -18,6 +19,7 @@ class NewsController extends Controller
     {
         return view('manage.news', [
             'news' => News::all(),
+            'notifies' => Notify::notifiesToArray()
         ]);
     }
 

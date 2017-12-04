@@ -29,7 +29,7 @@ Route::group(['middleware'=>'web'], function() {
     Route::get('/event', ['as'=>'event', 'uses'=>'EventController@show']);
     Route::post('/event', ['as'=>'event_res', 'uses'=>'EventController@reserve']); // зарезервировать мероприятие
 
-    Route::resource('/cart', 'CartController', ['only' => ['index', 'store', 'destroy']]);
+    Route::resource('/cart', 'CartController', ['only' => ['index', 'store']]);
 
     Route::group(['middleware'=>'auth'], function() {
 

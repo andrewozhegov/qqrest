@@ -66,23 +66,15 @@
             <div class="container">
                 <form enctype="multipart/form-data" class="form-horizontal" method="post">
                     {{ csrf_field() }}
-                    <div class="row">
-                        <div class=" col-md-6 col-sm-6 col-md-push-0">
-                            <div class="form-group">
-                                <label for="name">Ваша Фамилия и Имя:</label>
-                                <input type="text" class="form-control" name="name" id="name" value="@if(Auth::check()) {{ Auth::user()->name }} @endif">
-                            </div>
+                        <div class="form-group">
+                            <label for="name">Ваша Фамилия и Имя:</label>
+                            <input type="text" class="form-control" name="name" id="name" value="@if(Auth::check()) {{ Auth::user()->name }} @endif">
                         </div>
-                        <div class="col-md-6 col-sm-6 col-md-push-0">
-                            <div class="form-group">
-                                <label for="ph">Введите контактный номер телфона:</label>
-                                <input type="tel" class="form-control" name="phone" id="ph" value="@if(Auth::check()) {{ Auth::user()->phone }} @endif">
-                            </div>
+                        <div class="form-group">
+                            <label for="ph">Введите контактный номер телфона:</label>
+                            <input type="tel" class="form-control" name="phone" id="ph" value="@if(Auth::check()) {{ Auth::user()->phone }} @endif">
                         </div>
-                        {{--<div class="col-md-4 col-sm-4 col-md-push-0">--}}
-                            <button type="submit" class="btn btn-default">Отправить заявку</button>
-                        {{--</div>--}}
-                    </div>
+                        <button type="submit" class="btn btn-default">Отправить заявку</button>
                 </form>
             </div>
 

@@ -148,25 +148,9 @@
     <div class="container">
         <section>
             <div class="row">
-                <div class="col-md-3 col-sm-4 col-md-push-0">
-                    <div class="panel panel-default">
-                        <!-- Обычное содержимое панели -->
-                        <div class="panel-heading">Управление</div>
-                        <div class="list-group">
-                            <a href="#" class="list-group-item">Новости <span class="badge"></span></a>
-                            <a href="#" class="list-group-item">Награды <span class="badge"></span></a>
-                            <a href="#" class="list-group-item">Отзывы <span class="badge">1</span></a>
 
-                            <a href="#" class="list-group-item">Товары <span class="badge"></span></a>
-                            <a href="#" class="list-group-item">Заказы <span class="badge">1</span></a>
-                            <a href="#" class="list-group-item">Бронирование <span class="badge">1</span></a>
-                            <a href="#" class="list-group-item">Мероприятия <span class="badge">1</span></a>
+                @include('manage.includes.manage-nav')
 
-                            <a href="#" class="list-group-item">Филлиалы <span class="badge"></span></a>
-                            <a href="#" class="list-group-item">Персонал <span class="badge"></span></a>
-                        </div>
-                    </div>
-                </div>
                 <div class="col-md-9 col-sm-8 col-md-push-0">
                     <button data-toggle="modal" data-target="#addModal" class="btn btn-warring">Добавить новость</button>
                     <h2>Список новостей:</h2>
