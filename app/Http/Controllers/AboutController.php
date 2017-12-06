@@ -11,6 +11,7 @@ use App\AwardBoard;
 use App\StaffBoard;
 
 use App\Review;
+use App\Notify;
 
 class AboutController extends Controller
 {
@@ -36,6 +37,11 @@ class AboutController extends Controller
         ]);
 
         Auth::user()->reviews()->save($review);
+
+        $notification = Notify::all()->where('page', '=', 'reviews')->first();
+        $notification->update([
+            'count' => ++$notification->count
+        ]);
 
         return redirect('about');
     }

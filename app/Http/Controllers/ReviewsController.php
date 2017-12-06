@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Review;
+use App\Notify;
+
 class ReviewsController extends Controller
 {
     /**
@@ -13,50 +16,32 @@ class ReviewsController extends Controller
      */
     public function index()
     {
-        //
-    }
+        Notify::all()->where('page', '=', 'reviews')->first()->update(['count' => 0]);
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return view('manage.reviews', [
+            'reviews' => Review::all(),
+            'notifies' => Notify::notifiesToArray()
+        ]);
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        //
+        if ($request->ajax())
+        {
+            $item = Review::find($id);
+
+            $resp = [
+                'id' => $item->id,
+                'text' => $item->text
+            ];
+
+            return $resp;
+        }
     }
 
     /**
@@ -68,7 +53,28 @@ class ReviewsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if ($request->ajax())
+        {
+            $this->validate($request, [
+                'text' => 'required'
+            ]);
+
+            $item = Review::find($id);
+
+            $text = $request->get('text');
+
+            $item->update([
+                'text' => $text
+            ]);
+
+            $resp = [
+                'id' => $item->id,
+                'text' => $item->text,
+                'updated_at' => ''.$item->updated_at
+            ];
+
+            return $resp;
+        }
     }
 
     /**
@@ -77,8 +83,11 @@ class ReviewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        if ($request->ajax())
+        {
+            Review::find($id)->delete();
+        }
     }
 }
