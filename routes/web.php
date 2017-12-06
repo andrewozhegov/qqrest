@@ -37,6 +37,9 @@ Route::group(['middleware'=>'web'], function() {
         Route::post('/profile', ['as'=>'update_profile', 'uses'=>'ProfileController@update']);
 
         Route::group(['prefix'=>"manage"], function() {
+
+            Route::resource('awardboard', 'AwardBoardController', ['only' => ['update', 'destroy']]);
+
             Route::resources([
                  'news' => 'NewsController',
                  'branches' => 'BranchesController',

@@ -10,8 +10,7 @@ class Award extends Model
 
     protected $fillable = ['name', 'image'];
 
-    public function board ()
-    {
+    public function board () {
         return $this->hasOne('App\AwardBoard', 'award_id', 'id');
     }
 

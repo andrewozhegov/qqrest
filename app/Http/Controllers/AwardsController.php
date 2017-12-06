@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
+use App\Award;
+use App\AwardBoard;
+use App\Notify;
 
 class AwardsController extends Controller
 {
@@ -13,17 +18,11 @@ class AwardsController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return view('manage.awards', [
+            'awards' => Award::all(),
+            'board' => AwardBoard::award_all(),
+            'notifies' => Notify::notifiesToArray()
+        ]);
     }
 
     /**
@@ -34,7 +33,35 @@ class AwardsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->ajax())
+        {
+            $this->validate($request, [
+                'name' => 'required',
+                'photo' => 'file|image',
+            ]);
+
+            $name = $request->get('name');
+            $photo = 'awards/'.$request->file('photo')->getClientOriginalName();
+
+            if (Storage::put($photo, file_get_contents($request->file('photo')->getRealPath())))
+            {
+                $award_id = Award::create([
+                    'name' => $name,
+                    'image' => $photo,
+                ])->id;
+
+                $award_obj = Award::find($award_id);
+
+                $award = [
+                    'id' => $award_obj->id,
+                    'name' => $award_obj->name,
+                    'image' => asset($award_obj->image()),
+                    'created_at' => ''.$award_obj->created_at
+                ];
+
+                return $award;
+            }
+        }
     }
 
     /**
@@ -43,9 +70,20 @@ class AwardsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        //
+        if ($request->ajax())
+        {
+            $award = Award::find($id);
+
+            $resp = [
+                'name' => $award->name,
+                'image' => asset($award->image()),
+                'updated_at' => $award->updated_at
+            ];
+
+            return $resp;
+        }
     }
 
     /**
@@ -54,9 +92,20 @@ class AwardsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        //
+        if ($request->ajax())
+        {
+            $award = Award::find($id);
+
+            $resp = [
+                'id' => $award->id,
+                'name' => $award->name,
+                'image' => asset($award->image())
+            ];
+
+            return $resp;
+        }
     }
 
     /**
@@ -68,7 +117,42 @@ class AwardsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if ($request->ajax())
+        {
+            $this->validate($request, [
+                'name' => 'required'
+            ]);
+
+            $award = Award::find($id);
+
+            if ($request->hasFile('photo'))
+            {
+                $photo = 'awards/'.$request->file('photo')->getClientOriginalName();
+                $photo_old = $award->image;
+
+                if (Storage::put($photo, file_get_contents($request->file('photo')->getRealPath())))
+                {
+                    $award->update([
+                        'image' => $photo
+                    ]);
+                    Storage::delete($photo_old);
+                }
+            }
+
+            $name = $request->get('name');
+
+            $award->update([
+                'name' => $name
+            ]);
+
+            $resp = [
+                'id' => $award->id,
+                'name' => $award->name,
+                'updated_at' => ''.$award->updated_at
+            ];
+
+            return $resp;
+        }
     }
 
     /**
@@ -77,8 +161,13 @@ class AwardsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        if ($request->ajax())
+        {
+            $award = Award::find($id);
+            Storage::delete($award->image);
+            $award->delete();
+        }
     }
 }

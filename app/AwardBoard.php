@@ -18,12 +18,26 @@ class AwardBoard extends Model
     }
 
     static public function award_all () {
-        $award = [];
-        array_push ($award,
-            AwardBoard::find(1)->award,
-            AwardBoard::find(2)->award,
-            AwardBoard::find(3)->award
-        );
-        return $award;
+        $awards = [];
+
+        foreach (AwardBoard::all() as $award) {
+            array_push($awards, $award->award);
+        }
+
+        return $awards;
+    }
+
+    static public function awards_ids () {
+        $awards = [];
+
+        foreach (AwardBoard::award_all() as $award) {
+            array_push($awards, $award->id);
+        }
+
+        return $awards;
+    }
+
+    static public function is_on_board ($award) {
+        return in_array($award->id, self::awards_ids());
     }
 }
