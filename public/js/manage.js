@@ -7,14 +7,16 @@ function show_item(page, id) {
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         success: function($response) {
-            $('#openModalName').html($response['name']); // AWARDS
+            $('#openModalName').html($response['name']); // AWARDS PRODUCTS
             $('#openModalTitle').html($response['title']); // NEWS
-            $('#openModalImage').attr('src', $response['image']); // NEWS AWARDS
+            $('#openModalType').html($response['type']); // PRODUCTS
+            $('#openModalPrice').html($response['price']); // PRODUCTS
+            $('#openModalImage').attr('src', $response['image']); // NEWS AWARDS PRODUCTS
+            $('#openModalImage1').attr('src', $response['image1']); // PRODUCTS
             $('#openModalText').html($response['text']); // NEWS
             $('#openModalDate').html($response['updated_at']);// NEWS AWARDS
 
             $('#openModal').modal();
-
         },
         error: function(req, text, error){
             console.error('Упс! Ошибочка: ' + text + ' | ' + error);
@@ -26,10 +28,14 @@ function add_item(page) {
     var path = page;
 
     var form_data = new FormData();
-    form_data.append('name', $('input[name=name]')[0].value); // AWARDS
+    form_data.append('name', $('input[name=name]')[0].value); // AWARDS PRODUCT
     form_data.append('title', $('input[name=title]')[0].value); // NEWS
-    form_data.append('photo', $('input[type=file]')[0].files[0]); // NEWS AWARDS
+    form_data.append('photo', $('input[type=file]')[0].files[0]); // NEWS AWARDS PRODUCT
+    form_data.append('photo1', $('input[type=file]')[1].files[0]); // PRODUCT
     form_data.append('text',  $('textarea[name=text]')[0].value); // NEWS
+    form_data.append('type',  $('select[name=type]')[0].value); // PRODUCT
+    form_data.append('count',  $('input[name=count]')[0].value); // PRODUCT
+    form_data.append('price',  $('input[name=price]')[0].value); // PRODUCT
 
     $.ajax({
         url: path,
@@ -73,6 +79,23 @@ function add_item(page) {
                            '</tr>\n';
                     break;
                 }
+                case 'menu': {
+                    html = '<tr id="row' + $response['id'] + '">\n' +
+                        '                <td class="rowName">' + $response['name'] + '</td>\n' +
+                        '                <td class="rowCount">' + $response['count'] + '</td>\n' +
+                        '                <td>\n' +
+                        '                    <div class="material-switch pull-left">\n' +
+                        '                        <input type="checkbox" id="switch' + $response['id'] + '" onclick="change_board(\'' + page + '\', ' + $response['id'] + ')"/>' +
+                        '                        <label for="switch' + $response['id'] + '" class="label-success"></label>\n' +
+                        '                    </div>\n' +
+                        '                </td>\n' +
+                        '                <td class="btn-group-xs">\n' +
+                        '                    <button class="btn btn-info" onclick="show_item(\'' + page + '\', ' + $response['id'] + ')">Открыть</button>\n' +
+                        '                    <button class="btn btn-warning" onclick="edit_item(\'' + page + '\', ' + $response['id'] + ')">Изменить</button>\n' +
+                        '                    <button class="btn btn-danger" onclick="delete_item(\'' + page + '\', ' + $response['id'] + ')">Удалить</button>\n' +
+                        '                </td>\n' +
+                        '            </tr>'
+                }
             }
 
             $("#items_table").append(html);
@@ -97,11 +120,16 @@ function edit_item(page, id) {
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         success: function($response) {
-            $('#editModalName').attr('value', $response['name']); // AWARD
+            $('#editModalName').attr('value', $response['name']); // AWARD PRODUCTS
             $('#editModalTitle').attr('value', $response['title']); // NEWS
-            $('#editModalImage').attr('src', $response['image']); // NEWS AWARD
+            $('#editModalImage').attr('src', $response['image']); // NEWS AWARD PRODUCTS
+            $('#editModalImage1').attr('src', $response['image1']); // PRODUCTS
             $('#editModalText').html($response['text']); // NEWS REVIEWS
-            $('#form_edit_item').attr('onsubmit', 'update_item(\'' + page + '\', ' + $response['id'] + ')'); // NEWS AWARD REVIEWS
+            $('#editModalType' + $response['type']).attr('selected', ''); // PRODUCTS
+            $('#editModalCount').attr('value', $response['count']); // PRODUCTS
+            $('#editModalPrice').attr('value', $response['price']); // PRODUCTS
+
+            $('#form_edit_item').attr('onsubmit', 'update_item(\'' + page + '\', ' + $response['id'] + ')'); // NEWS AWARD REVIEWS PRODUCTS
 
             $('#editModal').modal();
         },
@@ -116,10 +144,14 @@ function update_item(page, id) {
 
     var form_data = new FormData();
     form_data.append("_method", "PUT");
-    form_data.append('name', $('input[name=name_upd]')[0].value); // AWARD
+    form_data.append('name', $('input[name=name_upd]')[0].value); // AWARD PRODUCTS
     form_data.append('title', $('input[name=title_upd]')[0].value); // NEWS
-    form_data.append('photo', $('input[type=file]')[1].files[0]); // NEWS AWARD
+    form_data.append('photo', $('input[type=file]')[2].files[0]); // NEWS AWARD PRODUCTS
+    form_data.append('photo1', $('input[type=file]')[3].files[0]); // PRODUCTS
     form_data.append('text',  $('textarea[name=text_upd]')[0].value); // NEWS REVIEWS
+    form_data.append('type',  $('select[name=type_upd]')[0].value); // PRODUCTS
+    form_data.append('count', $('input[name=count_upd]')[0].value); // PRODUCTS
+    form_data.append('price', $('input[name=price_upd]')[0].value); // PRODUCTS
 
     $.ajax({
         url: path,
@@ -132,10 +164,11 @@ function update_item(page, id) {
             console.log($response);
             var row = 'row' + $response['id'];
 
-            $("#" + row + " .rowName").html($response['name']); // AWARD
+            $("#" + row + " .rowName").html($response['name']); // AWARD PRODUCTS
             $("#" + row + " .rowDate").html($response['updated_at']); // NEWS AWARD REVIEWS
             $("#" + row + " .rowTitle").html($response['title']); // NEWS
             $("#" + row + " .rowText").html($response['text']); // NEWS
+            $("#" + row + " .rowCount").html($response['count']); // PRODUCTS
 
             $('.close').click();
         },

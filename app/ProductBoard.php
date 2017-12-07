@@ -17,13 +17,27 @@ class ProductBoard extends Model
         return $this->belongsTo('App\Product', 'product_id', 'id');
     }
 
-    static public function product_all () {
-        $product = [];
-        array_push ($product,
-            ProductBoard::find(1)->product,
-            ProductBoard::find(2)->product,
-            ProductBoard::find(3)->product
-        );
-        return $product;
+    static public function products_all () {
+        $products = [];
+
+        foreach (ProductBoard::all() as $product) {
+            array_push($products, $product->product);
+        }
+
+        return $products;
+    }
+
+    static public function products_ids () {
+        $products = [];
+
+        foreach (ProductBoard::products_all() as $product) {
+            array_push($products, $product->id);
+        }
+
+        return $products;
+    }
+
+    static public function is_on_board ($product) {
+        return in_array($product->id, self::products_ids());
     }
 }

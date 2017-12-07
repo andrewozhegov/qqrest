@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\Notify;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Session;
@@ -32,6 +33,7 @@ class CartController extends Controller
 
         return view('cart', [
             'cart' => $cart,
+            'notifies' => Notify::notifiesToArray(),
             'products' => $cart_products,
         ]);
     }

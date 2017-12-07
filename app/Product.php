@@ -8,7 +8,7 @@ class Product extends Model
 {
     protected $table = 'products';
 
-    protected $fillable = ['name', 'count', 'price', 'image', 'text'];
+    protected $fillable = ['name', 'count', 'price', 'image', 'text', 'product_type_id'];
 
     public function board ()
     {
@@ -26,5 +26,9 @@ class Product extends Model
 
     public function image() {
         return 'storage/'.$this->image;
+    }
+
+    public function image_big() {
+        return 'storage/'.$this->image_big;
     }
 }

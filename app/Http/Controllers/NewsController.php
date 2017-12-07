@@ -123,9 +123,6 @@ class NewsController extends Controller
     {
         if ($request->ajax())
         {
-            //return $request->file('photo');
-            //return 'sfsfsdfsdf';
-
             $this->validate($request, [
                 'title' => 'required',
                 'text' => 'required'

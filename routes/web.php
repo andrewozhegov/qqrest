@@ -39,6 +39,7 @@ Route::group(['middleware'=>'web'], function() {
         Route::group(['prefix'=>"manage"], function() {
 
             Route::resource('awardboard', 'AwardBoardController', ['only' => ['update', 'destroy']]);
+            Route::resource('productboard', 'ProductBoardController', ['only' => ['update', 'destroy']]);
 
             Route::resources([
                  'news' => 'NewsController',
@@ -54,10 +55,6 @@ Route::group(['middleware'=>'web'], function() {
         });
     });
 });
-
-
-
-
 
 Auth::routes();
 

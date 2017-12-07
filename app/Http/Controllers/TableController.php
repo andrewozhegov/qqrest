@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Notify;
 
 use App\Branch;
 use App\Reservation;
@@ -13,6 +14,7 @@ class TableController extends Controller
     {
         return view('table', [
             'branches' => Branch::all(),
+            'notifies' => Notify::notifiesToArray()
         ]);
     }
 

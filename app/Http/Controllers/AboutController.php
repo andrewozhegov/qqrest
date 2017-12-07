@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Notify;
 
 use App\BranchBoard;
 use App\ServiceBoard;
@@ -11,7 +12,6 @@ use App\AwardBoard;
 use App\StaffBoard;
 
 use App\Review;
-use App\Notify;
 
 class AboutController extends Controller
 {
@@ -23,6 +23,7 @@ class AboutController extends Controller
             'awards' => AwardBoard::award_all(),
             'staffs' => StaffBoard::staff_all(),
             'reviews' => Review::all(),
+            'notifies' => Notify::notifiesToArray()
         ]);
     }
 
