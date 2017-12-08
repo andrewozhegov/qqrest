@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Branch;
+use App\BranchBoard;
+use App\Notify;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class BranchesController extends Controller
 {
@@ -13,17 +17,11 @@ class BranchesController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return view('manage.branches', [
+            'branches' => Branch::all(),
+            'board' => BranchBoard::branch_all(),
+            'notifies' => Notify::notifiesToArray()
+        ]);
     }
 
     /**
@@ -34,7 +32,43 @@ class BranchesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->ajax())
+        {
+            $this->validate($request, [
+                'name' => 'required',
+                'title' => 'required',
+                'photo' => 'file|image',
+                'photo1' => 'file|image'
+            ]);
+
+            $name = $request->get('name');
+            $address = $request->get('title');
+            $photo = 'branches/'.$request->file('photo')->getClientOriginalName();
+            $photo1 = 'branches/'.$request->file('photo1')->getClientOriginalName();
+
+            if (Storage::put($photo, file_get_contents($request->file('photo')->getRealPath())))
+            {
+                if (Storage::put($photo1, file_get_contents($request->file('photo1')->getRealPath())))
+                {
+
+                    $branch = Branch::create([
+                        'name' => $name,
+                        'address' => $address,
+                        'image' => $photo,
+                        'img_big' => $photo1
+                    ]);
+
+                    $resp = [
+                        'id' => $branch->id,
+                        'name' => $branch->name,
+                        'address' => $branch->address
+                    ];
+
+                    return $resp;
+                }
+
+            }
+        }
     }
 
     /**
@@ -43,9 +77,21 @@ class BranchesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        //
+        if ($request->ajax())
+        {
+            $branch = Branch::find($id);
+
+            $resp = [
+                'name' => $branch->name,
+                'title' => $branch->address,
+                'image' => asset($branch->image()),
+                'image1' => asset($branch->img_big()),
+            ];
+
+            return $resp;
+        }
     }
 
     /**
@@ -54,9 +100,22 @@ class BranchesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        //
+        if ($request->ajax())
+        {
+            $branch = Branch::find($id);
+
+            $resp = [
+                'id' => $branch->id,
+                'name' => $branch->name,
+                'title' => $branch->address,
+                'image' => asset($branch->image()),
+                'image1' => asset($branch->img_big())
+            ];
+
+            return $resp;
+        }
     }
 
     /**
@@ -68,7 +127,59 @@ class BranchesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if ($request->ajax())
+        {
+            $this->validate($request, [
+                'name' => 'required',
+                'title' => 'required'
+            ]);
+
+            $branch = Branch::find($id);
+
+            if ($request->hasFile('photo'))
+            {
+                $photo = 'branches/'.$request->file('photo')->getClientOriginalName();
+                $photo_old = $branch->image;
+
+                if (Storage::put($photo, file_get_contents($request->file('photo')->getRealPath())))
+                {
+                    $branch->update([
+                        'image' => $photo
+                    ]);
+                    Storage::delete($photo_old);
+                }
+            }
+
+            if ($request->hasFile('photo1'))
+            {
+                $photo1 = 'branches/'.$request->file('photo1')->getClientOriginalName();
+                $photo1_old = $branch->img_big;
+
+                if (Storage::put($photo1, file_get_contents($request->file('photo1')->getRealPath())))
+                {
+                    $branch->update([
+                        'img_big' => $photo1
+                    ]);
+                    Storage::delete($photo1_old);
+                }
+            }
+
+            $name = $request->get('name');
+            $address = $request->get('title');
+
+            $branch->update([
+                'name' => $name,
+                'address' => $address
+            ]);
+
+            $resp = [
+                'id' => $branch->id,
+                'name' => $branch->name,
+                'title' => $branch->address
+            ];
+
+            return $resp;
+        }
     }
 
     /**
@@ -77,8 +188,14 @@ class BranchesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        if ($request->ajax())
+        {
+            $branch = Branch::find($id);
+            Storage::delete($branch->image);
+            Storage::delete($branch->img_big);
+            $branch->delete();
+        }
     }
 }

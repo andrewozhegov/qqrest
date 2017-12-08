@@ -17,11 +17,25 @@ class BranchBoard extends Model
 
     static public function branch_all () {
         $branches = [];
-        array_push ($branches,
-            BranchBoard::find(1)->branch,
-            BranchBoard::find(2)->branch,
-            BranchBoard::find(3)->branch
-        );
+
+        foreach (BranchBoard::all() as $branch) {
+            array_push($branches, $branch->branch);
+        }
+
         return $branches;
+    }
+
+    static public function branch_ids () {
+        $branches = [];
+
+        foreach (BranchBoard::branch_all() as $branch) {
+            array_push($branches, $branch->id);
+        }
+
+        return $branches;
+    }
+
+    static public function is_on_board ($branch) {
+        return in_array($branch->id, self::branch_ids());
     }
 }

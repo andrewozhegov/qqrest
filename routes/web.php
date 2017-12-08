@@ -40,6 +40,7 @@ Route::group(['middleware'=>'web'], function() {
 
             Route::resource('awardboard', 'AwardBoardController', ['only' => ['update', 'destroy']]);
             Route::resource('productboard', 'ProductBoardController', ['only' => ['update', 'destroy']]);
+            Route::resource('branchboard', 'BranchBoardController', ['only' => ['update', 'destroy']]);
 
             Route::resources([
                  'news' => 'NewsController',

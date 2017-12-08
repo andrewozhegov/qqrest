@@ -7,12 +7,12 @@ function show_item(page, id) {
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         success: function($response) {
-            $('#openModalName').html($response['name']); // AWARDS PRODUCTS
-            $('#openModalTitle').html($response['title']); // NEWS
+            $('#openModalName').html($response['name']); // AWARDS PRODUCTS BRANCHES
+            $('#openModalTitle').html($response['title']); // NEWS BRANCHES(address)
             $('#openModalType').html($response['type']); // PRODUCTS
             $('#openModalPrice').html($response['price']); // PRODUCTS ORDERS
-            $('#openModalImage').attr('src', $response['image']); // NEWS AWARDS PRODUCTS
-            $('#openModalImage1').attr('src', $response['image1']); // PRODUCTS
+            $('#openModalImage').attr('src', $response['image']); // NEWS AWARDS PRODUCTS BRANCHES
+            $('#openModalImage1').attr('src', $response['image1']); // PRODUCTS BRANCHES
             $('#openModalText').html($response['text']); // NEWS
             $('#openModalDate').html($response['updated_at']);// NEWS AWARDS
             $('#openModalTable').html($response['check']); // ORDERS
@@ -29,10 +29,10 @@ function add_item(page) {
     var path = page;
 
     var form_data = new FormData();
-    form_data.append('name', $('input[name=name]')[0].value); // AWARDS PRODUCT
-    form_data.append('title', $('input[name=title]')[0].value); // NEWS
-    form_data.append('photo', $('input[type=file]')[0].files[0]); // NEWS AWARDS PRODUCT
-    form_data.append('photo1', $('input[type=file]')[1].files[0]); // PRODUCT
+    form_data.append('name', $('input[name=name]')[0].value); // AWARDS PRODUCT BRANCHES
+    form_data.append('title', $('input[name=title]')[0].value); // NEWS BRANCHES(address)
+    form_data.append('photo', $('input[type=file]')[0].files[0]); // NEWS AWARDS PRODUCT BRANCHES
+    form_data.append('photo1', $('input[type=file]')[1].files[0]); // PRODUCT BRANCHES
     form_data.append('text',  $('textarea[name=text]')[0].value); // NEWS
     form_data.append('type',  $('select[name=type]')[0].value); // PRODUCT
     form_data.append('count',  $('input[name=count]')[0].value); // PRODUCT
@@ -97,6 +97,23 @@ function add_item(page) {
                         '                </td>\n' +
                         '            </tr>'
                 }
+                case 'branches': {
+                    html = '<tr id="row' + $response['id'] + '">\n' +
+                        '                <td class="rowName">' + $response['name'] + '</td>\n' +
+                        '                <td class="rowTitle">' + $response['address'] + '</td>\n' +
+                        '                <td>\n' +
+                        '                    <div class="material-switch pull-left">\n' +
+                        '                        <input type="checkbox" id="switch' + $response['id'] + '" onclick="change_board(\'' + page + '\', ' + $response['id'] + ')"/>\n' +
+                        '                        <label for="switch{{ $branch->id }}" class="label-success"></label>\n' +
+                        '                    </div>\n' +
+                        '                </td>\n' +
+                        '                <td class="btn-group-xs">\n' +
+                        '                    <button class="btn btn-info" onclick="show_item(\'' + page + '\', ' + $response['id'] + ')">Открыть</button>\n' +
+                        '                    <button class="btn btn-warning" onclick="edit_item(\'' + page + '\', ' + $response['id'] + ')">Изменить</button>\n' +
+                        '                    <button class="btn btn-danger" onclick="delete_item(\'' + page + '\', ' + $response['id'] + ')">Удалить</button>\n' +
+                        '                </td>\n' +
+                        '            </tr>';
+                }
             }
 
             $("#items_table").append(html);
@@ -145,10 +162,10 @@ function update_item(page, id) {
 
     var form_data = new FormData();
     form_data.append("_method", "PUT");
-    form_data.append('name', $('input[name=name_upd]')[0].value); // AWARD PRODUCTS
-    form_data.append('title', $('input[name=title_upd]')[0].value); // NEWS
-    form_data.append('photo', $('input[type=file]')[2].files[0]); // NEWS AWARD PRODUCTS
-    form_data.append('photo1', $('input[type=file]')[3].files[0]); // PRODUCTS
+    form_data.append('name', $('input[name=name_upd]')[0].value); // AWARD PRODUCTS BRANCHES
+    form_data.append('title', $('input[name=title_upd]')[0].value); // NEWS BRANCHES(address)
+    form_data.append('photo', $('input[type=file]')[2].files[0]); // NEWS AWARD PRODUCTS BRANCHES
+    form_data.append('photo1', $('input[type=file]')[3].files[0]); // PRODUCTS BRANCHES
     form_data.append('text',  $('textarea[name=text_upd]')[0].value); // NEWS REVIEWS
     form_data.append('type',  $('select[name=type_upd]')[0].value); // PRODUCTS
     form_data.append('count', $('input[name=count_upd]')[0].value); // PRODUCTS
