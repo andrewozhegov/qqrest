@@ -3,7 +3,6 @@
 @section('page_name', 'Управление заказами')
 
 @section('css')
-    <link type="text/css" rel="stylesheet" href="{{ asset('/css/material-switch.css') }}" />
 @endsection
 
 @section('js')

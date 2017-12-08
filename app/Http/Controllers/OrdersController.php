@@ -16,6 +16,8 @@ class OrdersController extends Controller
      */
     public function index()
     {
+        Notify::all()->where('page', '=', 'orders')->first()->update(['count' => 0]);
+
         return view('manage.orders', [
             'orders' => Order::all(),
             'notifies' => Notify::notifiesToArray()

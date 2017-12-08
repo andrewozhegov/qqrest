@@ -36,6 +36,11 @@ class TableController extends Controller
 
         Branch::find($request->get('address'))->reservations()->save($reservation);
 
+        $notification = Notify::all()->where('page', '=', 'reservations')->first();
+        $notification->update([
+            'count' => ++$notification->count
+        ]);
+
         return redirect('table');
 
     }

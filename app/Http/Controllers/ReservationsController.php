@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Notify;
+use App\Reservation;
 use Illuminate\Http\Request;
+use App\Branch;
 
 class ReservationsController extends Controller
 {
@@ -13,7 +16,12 @@ class ReservationsController extends Controller
      */
     public function index()
     {
-        //
+        Notify::all()->where('page', '=', 'reservations')->first()->update(['count' => 0]);
+
+        return view('manage.reservations', [
+            'reservations' => Reservation::all(),
+            'notifies' => Notify::notifiesToArray()
+        ]);
     }
 
     /**
@@ -62,13 +70,18 @@ class ReservationsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id)
     {
-        //
+        $reservation = Reservation::find($id);
+
+        $reservation->update([
+            'done' => 1
+        ]);
+
+        return $reservation->id;
     }
 
     /**
@@ -77,8 +90,12 @@ class ReservationsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        if ($request->ajax())
+        {
+            $reservation = Reservation::find($id);
+            $reservation->delete();
+        }
     }
 }

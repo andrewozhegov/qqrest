@@ -96,13 +96,14 @@ class CartController extends Controller
             $client_name = $request->get('name');
             $client_phone = $request->get('phone');
 
+            $count_all = Session::pull('cart.count');
             $cart = Session::pull('cart');
 
             if($cart != null) {
                 $order = Order::create([
                     'client_name' => $client_name,
                     'client_phone'=> $client_phone,
-                    'price' => $cart['count']
+                    'price' => $count_all
                 ]);
 
                 $keys = array_keys($cart);
