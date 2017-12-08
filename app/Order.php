@@ -8,7 +8,7 @@ class Order extends Model
 {
     protected $table = 'orders';
 
-    protected $fillable = ['price', 'done'];
+    protected $fillable = ['price', 'done', 'client_name', 'client_phone'];
 
     public function events () {
         return $this->hasMany('App\Event', 'order_id', 'id');
@@ -16,6 +16,6 @@ class Order extends Model
 
     public function products ()
     {
-        return $this->belongsToMany('App\Product', 'products_orders', 'order_id', 'product_id')->withTimestamps();
+        return $this->belongsToMany('App\Product', 'products_orders', 'order_id', 'product_id');
     }
 }

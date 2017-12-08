@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Order;
+use App\Notify;
+
 class OrdersController extends Controller
 {
     /**
@@ -13,7 +16,10 @@ class OrdersController extends Controller
      */
     public function index()
     {
-        //
+        return view('manage.orders', [
+            'orders' => Order::all(),
+            'notifies' => Notify::notifiesToArray()
+        ]);
     }
 
     /**
@@ -43,9 +49,26 @@ class OrdersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        //
+        if ($request->ajax())
+        {
+            $order = Order::find($id);
+            $products = $order->products;
+
+            $check = '';
+
+            foreach ($products as $product) {
+                $check = $check.'<p> '.$product->name.' - '.$product->price.' * '.$product->count.'</p>';
+            }
+
+            $resp = [
+                'check' => $check,
+                'price' => $order->price
+            ];
+
+            return $resp;
+        }
     }
 
     /**
@@ -62,13 +85,18 @@ class OrdersController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id)
     {
-        //
+        $order = Order::find($id);
+
+        $order->update([
+            'done' => 1
+        ]);
+
+        return $order->id;
     }
 
     /**
@@ -77,8 +105,13 @@ class OrdersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        if ($request->ajax())
+        {
+            $order = Order::find($id);
+            $order->products()->detach();
+            $order->delete();
+        }
     }
 }

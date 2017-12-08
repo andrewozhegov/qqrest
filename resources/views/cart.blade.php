@@ -7,25 +7,6 @@
 
 @section('js')
     <script src="js/cart.js"></script>
-    {{--<script>--}}
-        {{--$(document).ready( function() {--}}
-            {{--$(function () {--}}
-                {{--var sum = 0;--}}
-                {{--$('.table').live(function() {--}}
-                    {{--$('tr').each(function()--}}
-                    {{--{--}}
-                        {{--//sum += parseInt($('.prc').val()) * parseInt($('.cnt').val());--}}
-                        {{--//sum = 5;--}}
-                        {{--var ppp = $('.prc').html() * $('.cnt').html();--}}
-                        {{--console.log(ppp);--}}
-                        {{--console.log('sdsds');--}}
-                        {{--sum += $('.prc').html() * $('.cnt').html();--}}
-                    {{--});--}}
-                {{--});--}}
-                {{--//$('#res').html(sum);--}}
-            {{--});--}}
-        {{--});--}}
-    {{--</script>--}}
 @endsection
 
 @section('content')
@@ -68,11 +49,11 @@
                     {{ csrf_field() }}
                         <div class="form-group">
                             <label for="name">Ваша Фамилия и Имя:</label>
-                            <input type="text" class="form-control" name="name" id="name" value="@if(Auth::check()) {{ Auth::user()->name }} @endif">
+                            <input type="text" class="form-control" name="name" id="name" value="@if(Auth::check()){{ Auth::user()->name }}@endif">
                         </div>
                         <div class="form-group">
                             <label for="ph">Введите контактный номер телфона:</label>
-                            <input type="tel" class="form-control" name="phone" id="ph" value="@if(Auth::check()) {{ Auth::user()->phone }} @endif">
+                            <input type="tel" class="form-control" name="phone" id="ph" value="@if(Auth::check()){{ Auth::user()->phone }}@endif">
                         </div>
                         <button type="submit" class="btn btn-default">Отправить заявку</button>
                 </form>

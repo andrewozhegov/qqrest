@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Order;
 use App\Product;
 use App\Notify;
 use Illuminate\Http\Request;
@@ -39,16 +40,6 @@ class CartController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -56,8 +47,8 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->ajax()) {
-
+        if($request->ajax())
+        {
             $path = 'cart.'.$request->get('product_id');
             $count = Session::pull($path);
             $count_all = Session::pull('cart.count');
@@ -86,8 +77,6 @@ class CartController extends Controller
 
             $request->session()->put('cart.price', $cart_count);
 
-            //------------
-
             $resp = [
                 'product_id' => $request->get('product_id'),
                 'count' => $count,
@@ -97,50 +86,40 @@ class CartController extends Controller
 
             return $resp;
         }
-    }
+        else
+        {
+            $this->validate($request, [
+                'name' => 'required',
+                'phone' => 'required'
+            ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+            $client_name = $request->get('name');
+            $client_phone = $request->get('phone');
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+            $cart = Session::pull('cart');
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+            if($cart != null) {
+                $order = Order::create([
+                    'client_name' => $client_name,
+                    'client_phone'=> $client_phone,
+                    'price' => $cart['count']
+                ]);
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id) // +
-    {
-        //
+                $keys = array_keys($cart);
+                $products = Product::all();
+
+                foreach($products as $item) {
+                    if(in_array($item->id, $keys)) {
+                        $order->products()->save($item, ['count' => $cart[$item->id]]);
+                    }
+                }
+            }
+            $notification = Notify::all()->where('page', '=', 'orders')->first();
+            $notification->update([
+                'count' => ++$notification->count
+            ]);
+
+            return redirect('cart');
+        }
     }
 }

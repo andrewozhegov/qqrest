@@ -10,11 +10,12 @@ function show_item(page, id) {
             $('#openModalName').html($response['name']); // AWARDS PRODUCTS
             $('#openModalTitle').html($response['title']); // NEWS
             $('#openModalType').html($response['type']); // PRODUCTS
-            $('#openModalPrice').html($response['price']); // PRODUCTS
+            $('#openModalPrice').html($response['price']); // PRODUCTS ORDERS
             $('#openModalImage').attr('src', $response['image']); // NEWS AWARDS PRODUCTS
             $('#openModalImage1').attr('src', $response['image1']); // PRODUCTS
             $('#openModalText').html($response['text']); // NEWS
             $('#openModalDate').html($response['updated_at']);// NEWS AWARDS
+            $('#openModalTable').html($response['check']); // ORDERS
 
             $('#openModal').modal();
         },
@@ -223,6 +224,32 @@ function change_board(page, id) {
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         success: function() { },
+        error: function(req, text, error) {
+            console.error('Упс! Ошибочка: ' + text + ' | ' + error);
+        },
+        contentType: false, // важно - убираем форматирование данных по умолчанию
+        processData: false // важно - убираем преобразование строк по умолчанию
+    });
+}
+
+function done_item(page, id) {
+    var path = page + '/' + id;
+
+    var form_data = new FormData();
+    form_data.append("_method", "PUT");
+
+    $.ajax({
+        url: path,
+        type: "POST",
+        data: form_data,
+        headers: {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function ($id) {
+            console.log($id);
+            var row = 'row' + $id;
+            $("#" + row + " .rowDone").html('<span class="glyphicon glyphicon-ok"></span>');
+        },
         error: function(req, text, error) {
             console.error('Упс! Ошибочка: ' + text + ' | ' + error);
         },
