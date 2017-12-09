@@ -27,6 +27,10 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function board () {
+        return $this->hasOne('App\StaffBoard', 'user_id', 'id');
+    }
+
     public function role () {
         return $this->belongsTo('App\Role', 'role_id', 'id');
     }

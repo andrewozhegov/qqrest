@@ -7,11 +7,11 @@ function show_item(page, id) {
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         success: function($response) {
-            $('#openModalName').html($response['name']); // AWARDS PRODUCTS BRANCHES
+            $('#openModalName').html($response['name']); // AWARDS PRODUCTS BRANCHES USERS
             $('#openModalTitle').html($response['title']); // NEWS BRANCHES(address)
-            $('#openModalType').html($response['type']); // PRODUCTS
+            $('#openModalType').html($response['type']); // PRODUCTS USERS(role)
             $('#openModalPrice').html($response['price']); // PRODUCTS ORDERS
-            $('#openModalImage').attr('src', $response['image']); // NEWS AWARDS PRODUCTS BRANCHES
+            $('#openModalImage').attr('src', $response['image']); // NEWS AWARDS PRODUCTS BRANCHES USERS
             $('#openModalImage1').attr('src', $response['image1']); // PRODUCTS BRANCHES
             $('#openModalText').html($response['text']); // NEWS
             $('#openModalDate').html($response['updated_at']);// NEWS AWARDS

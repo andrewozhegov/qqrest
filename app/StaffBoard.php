@@ -16,12 +16,26 @@ class StaffBoard extends Model
     }
 
     static public function staff_all () {
-        $staff = [];
-        array_push ($staff,
-            StaffBoard::find(1)->user,
-            StaffBoard::find(2)->user,
-            StaffBoard::find(3)->user
-        );
-        return $staff;
+        $staffs = [];
+
+        foreach (StaffBoard::all() as $staff) {
+            array_push($staffs, $staff->user);
+        }
+
+        return $staffs;
+    }
+
+    static public function staff_ids () {
+        $staffs = [];
+
+        foreach (StaffBoard::staff_all() as $staff) {
+            array_push($staffs, $staff->id);
+        }
+
+        return $staffs;
+    }
+
+    static public function is_on_board ($staff) {
+        return in_array($staff->id, self::staff_ids());
     }
 }

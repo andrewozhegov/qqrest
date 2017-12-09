@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Notify;
+use App\Role;
+use App\StaffBoard;
+use App\User;
 use Illuminate\Http\Request;
 
 class StaffController extends Controller
@@ -13,28 +17,12 @@ class StaffController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        return view('manage.staff', [
+            'users' => User::all(),
+            'roles' => Role::all(),
+            'board' => StaffBoard::staff_all(),
+            'notifies' => Notify::notifiesToArray()
+        ]);
     }
 
     /**
@@ -43,9 +31,20 @@ class StaffController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        //
+        if ($request->ajax())
+        {
+            $user = User::find($id);
+
+            $resp = [
+                'title' => $user->role->name,
+                'image' => asset($user->image()),
+                'name' => $user->name
+            ];
+
+            return $resp;
+        }
     }
 
     /**
@@ -54,9 +53,19 @@ class StaffController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        //
+        if ($request->ajax())
+        {
+            $user = User::find($id);
+
+            $resp = [
+                'id' => $user->id,
+                'type' => $user->role->id, // чтобы установить селект
+            ];
+
+            return $resp;
+        }
     }
 
     /**
@@ -68,7 +77,27 @@ class StaffController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if ($request->ajax())
+        {
+            $this->validate($request, [
+                'type' => 'required'
+            ]);
+
+            $user = User::find($id);
+
+            $role = $request->get('type');
+
+            $user_role = Role::find($role);
+            $user->role()->associate($user_role);
+            $user->save();
+
+            $resp = [
+                'id' => $user->id,
+                'title' => $user_role->name
+            ];
+
+            return $resp;
+        }
     }
 
     /**
@@ -77,8 +106,14 @@ class StaffController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        if ($request->ajax())
+        {
+            $user = User::find($id);
+            $user->board()->delete();
+            Storage::delete($user->image);
+            $user->delete();
+        }
     }
 }
