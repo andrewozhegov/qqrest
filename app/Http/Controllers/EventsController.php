@@ -92,13 +92,18 @@ class EventsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id)
     {
-        //
+        $event = Event::find($id);
+
+        $event->update([
+            'done' => 1
+        ]);
+
+        return $event->id;
     }
 
     /**
@@ -107,8 +112,15 @@ class EventsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        if ($request->ajax())
+        {
+            $event = Event::find($id);
+            $order = $event->order;
+            $order->products()->detach();
+            $event->delete();
+            $order->delete();
+        }
     }
 }

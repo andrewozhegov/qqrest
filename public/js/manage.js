@@ -7,7 +7,6 @@ function show_item(page, id) {
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         success: function($response) {
-            alert($response);
             $('#openModalName').html($response['name']); // AWARDS PRODUCTS BRANCHES USERS
             $('#openModalTitle').html($response['title']); // NEWS BRANCHES(address) EVENTS(branch)
             $('#openModalType').html($response['type']); // PRODUCTS USERS(role)
