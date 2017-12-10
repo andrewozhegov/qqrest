@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Notify;
+use App\Event;
 use Illuminate\Http\Request;
 
 class EventsController extends Controller
@@ -13,7 +15,12 @@ class EventsController extends Controller
      */
     public function index()
     {
-        //
+        Notify::all()->where('page', '=', 'events')->first()->update(['count' => 0]);
+
+        return view('manage.events', [
+            'events' => Event::all(),
+            'notifies' => Notify::notifiesToArray()
+        ]);
     }
 
     /**
@@ -43,9 +50,32 @@ class EventsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        //
+        if ($request->ajax())
+        {
+            $event = Event::find($id);
+            $products = $event->order->products;
+
+            $check = '';
+            $price = $event->order->price + 5000 + (500 * $event->guests);
+
+
+
+            foreach ($products as $product) {
+
+                $check = $check.'<p> '.$product->name.' - '.$product->price.' * '.$product->count.'</p>';
+            }
+
+
+            $resp = [
+                'title' => $event->branch->address,
+                'check' => $check,
+                'price' => $price
+            ];
+
+            return $resp;
+        }
     }
 
     /**

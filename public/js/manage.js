@@ -7,15 +7,16 @@ function show_item(page, id) {
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         success: function($response) {
+            alert($response);
             $('#openModalName').html($response['name']); // AWARDS PRODUCTS BRANCHES USERS
-            $('#openModalTitle').html($response['title']); // NEWS BRANCHES(address)
+            $('#openModalTitle').html($response['title']); // NEWS BRANCHES(address) EVENTS(branch)
             $('#openModalType').html($response['type']); // PRODUCTS USERS(role)
-            $('#openModalPrice').html($response['price']); // PRODUCTS ORDERS
+            $('#openModalPrice').html($response['price']); // PRODUCTS ORDERS EVENTS
             $('#openModalImage').attr('src', $response['image']); // NEWS AWARDS PRODUCTS BRANCHES USERS
             $('#openModalImage1').attr('src', $response['image1']); // PRODUCTS BRANCHES
             $('#openModalText').html($response['text']); // NEWS
             $('#openModalDate').html($response['updated_at']);// NEWS AWARDS
-            $('#openModalTable').html($response['check']); // ORDERS
+            $('#openModalTable').html($response['check']); // ORDERS EVENTS
 
             $('#openModal').modal();
         },
