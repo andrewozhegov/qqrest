@@ -28,7 +28,7 @@
         @foreach($reservations as $item)
             <tr id="row{{ $item->id }}">
                 <th class="rowDone">@if($item->done == 1)<span class="glyphicon glyphicon-ok"></span>@endif</th>
-                <td class="rowBranch">{{ $item->branch }}</td>
+                <td class="rowBranch">{{ $item->branch->name }}</td>
                 <td class="rowDate">{{ $item->date_time }}</td>
                 <td class="rowName">{{ $item->client_name }}</td>
                 <td class="rowPhone">{{ $item->client_phone }}</td>

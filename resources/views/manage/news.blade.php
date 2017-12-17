@@ -60,7 +60,12 @@
         {{-- форма добавления новой записи --}}
         {{ csrf_field() }}
 
+        <!-- ПУСТЫЕ ПОЛЯ -->
         <input type="hidden" name="name" value="">
+        <select class="form-control hidden" name="type" id="form_select"></select>
+        <input type="number" class="form-control hidden" name="count" value="" id="form_topic" placeholder="">
+        <input type="number" class="form-control hidden" name="price" value="" id="form_num1" placeholder="">
+        <!-- -->
 
         <div class="form-group">
             <div class="col-md-12">
@@ -90,6 +95,11 @@
                 <input class="form-control btn btn-block btn-default" type="reset" value="Очистить">
             </div>
         </div>
+
+        <!-- ПУСТЫЕ ПОЛЯ -->
+        <input class="hidden" type="file" accept=".png,.jpeg,.jpg" name="photo1" id="form_photo1">
+         <!-- -->
+
     </form>
 @endsection
 
@@ -101,7 +111,12 @@
     <form onsubmit="update_item()" enctype="multipart/form-data" class="form-horizontal" method="put" id="form_edit_item" action="javascript:void(null);" >
         {{ csrf_field() }}
 
+        <!-- ПУСТЫЕ ПОЛЯ -->
         <input type="hidden" name="name_upd" value="">
+        <select class="form-control hidden" name="type_upd" id="form_select"></select>
+        <input type="number" class="form-control hidden" name="count_upd" value="" id="form_topic" placeholder="">
+        <input type="number" class="form-control hidden" name="price_upd" value="" id="form_num1" placeholder="">
+        <!-- -->
 
         <div class="form-group">
             <div class="col-md-12">
@@ -122,6 +137,7 @@
                 <textarea id="editModalText" class="form-control" name="text_upd" rows="3"></textarea>
             </div>
         </div>
+
         <div class="form-group">
             <div class="col-md-8">
                 <input id="submit" class="form-control btn btn-block btn-primary"  type="submit" value="Отправить">
@@ -130,5 +146,10 @@
                 <input class="form-control btn btn-block btn-default" type="reset" value="Очистить">
             </div>
         </div>
+
+        <!-- ПУСТЫЕ ПОЛЯ -->
+        <input class="hidden" id="editModalImageNew" type="file" accept=".png,.jpeg,.jpg" name="photo1">
+        <!-- ПУСТЫЕ ПОЛЯ -->
+
     </form>
 @endsection

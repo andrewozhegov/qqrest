@@ -27,7 +27,6 @@
                 <td class="rowDate">{{ $review->created_at }}</td>
                 <td class="rowText">{{ $review->text }}</td>
                 <td class="btn-group-xs">
-                    {{--<button class="btn btn-success" onclick="edit_item('reviews', {{ $review->id }})">Одобрить</button>--}}
                     <button class="btn btn-warning" onclick="edit_item('reviews', {{ $review->id }})">Изменить</button>
                     <button class="btn btn-danger" onclick="delete_item('reviews', {{ $review->id }})">Удалить</button>
                 </td>
@@ -55,14 +54,18 @@
 @section('name-of-add-modal', '')
 
 @section('body-of-add-modal')
-    <form onsubmit="add_item('news')" enctype="multipart/form-data" class="form-horizontal" method="post" id="form_add_item" action="javascript:void(null);" >
+    <form onsubmit="add_item('')" enctype="multipart/form-data" class="form-horizontal" method="post" id="form_add_item" action="javascript:void(null);" >
         {{-- форма добавления новой записи --}}
         {{ csrf_field() }}
 
-        <input type="hidden" name="name" value="">
-        <input type="text" class="form-control" name="title" value="" id="form_topic" placeholder="Тема сообщения">
+        <input type="hidden" name="title" value="">
+        <textarea style="display:none;" name="text"></textarea>
+        <input type="text" class="form-control" name="name" value="" id="form_topic" placeholder="Название продукта">
         <input type="file" accept=".png,.jpeg,.jpg" name="photo" id="form_photo">
-        <textarea class="form-control" name="text" id="form_message" rows="3" placeholder="Сообщение"></textarea>
+        <input type="file" accept=".png,.jpeg,.jpg" name="photo1" id="form_photo1">
+        <select class="form-control" name="type" id="form_select"></select>
+        <input type="number" class="form-control" name="count" value="" id="form_topic" placeholder="">
+        <input type="number" class="form-control" name="price" value="" id="form_num1" placeholder="">
 
     </form>
 @endsection
@@ -77,8 +80,12 @@
         {{ csrf_field() }}
 
         <input type="hidden" name="title_upd" value="">
-        <input type="hidden" name="name_upd" value="">
-        <input type="file" name="photo" value="" style="display:none;">
+        <input type="text" class="form-control hidden" name="name_upd" value="" id="editModalName" placeholder="Название продукта">
+        <input class="hidden" type="file" accept=".png,.jpeg,.jpg" name="photo" id="form_photo">
+        <input class="hidden" type="file" accept=".png,.jpeg,.jpg" name="photo1" id="form_photo1">
+        <select class="form-control hidden" name="type_upd" id="editModalType"></select>
+        <input type="number" class="form-control hidden" name="count_upd" value="" id="editModalCount">
+        <input type="number" class="form-control hidden" name="price_upd" value="" id="editModalPrice">
 
         <div class="form-group">
             <div class="col-md-12">

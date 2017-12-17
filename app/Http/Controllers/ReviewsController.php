@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 use App\Review;
 use App\Notify;
@@ -16,6 +17,10 @@ class ReviewsController extends Controller
      */
     public function index()
     {
+        if (Gate::denies('moder')) {
+            return redirect('/');
+        }
+
         Notify::all()->where('page', '=', 'reviews')->first()->update(['count' => 0]);
 
         return view('manage.reviews', [
@@ -31,6 +36,10 @@ class ReviewsController extends Controller
      */
     public function edit(Request $request, $id)
     {
+        if (Gate::denies('moder')) {
+            return redirect('/');
+        }
+
         if ($request->ajax())
         {
             $item = Review::find($id);
@@ -53,6 +62,10 @@ class ReviewsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (Gate::denies('moder')) {
+            return redirect('/');
+        }
+
         if ($request->ajax())
         {
             $this->validate($request, [
@@ -85,6 +98,10 @@ class ReviewsController extends Controller
      */
     public function destroy(Request $request, $id)
     {
+        if (Gate::denies('moder')) {
+            return redirect('/');
+        }
+
         if ($request->ajax())
         {
             Review::find($id)->delete();

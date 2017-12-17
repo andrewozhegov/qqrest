@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Gate;
 
 use App\Award;
 use App\AwardBoard;
@@ -18,6 +19,10 @@ class AwardsController extends Controller
      */
     public function index()
     {
+        if (Gate::denies('moder')) {
+            return redirect('/');
+        }
+
         return view('manage.awards', [
             'awards' => Award::all(),
             'board' => AwardBoard::award_all(),
@@ -33,6 +38,10 @@ class AwardsController extends Controller
      */
     public function store(Request $request)
     {
+        if (Gate::denies('moder')) {
+            return redirect('/');
+        }
+
         if ($request->ajax())
         {
             $this->validate($request, [
@@ -72,6 +81,10 @@ class AwardsController extends Controller
      */
     public function show(Request $request, $id)
     {
+        if (Gate::denies('moder')) {
+            return redirect('/');
+        }
+
         if ($request->ajax())
         {
             $award = Award::find($id);
@@ -94,6 +107,10 @@ class AwardsController extends Controller
      */
     public function edit(Request $request, $id)
     {
+        if (Gate::denies('moder')) {
+            return redirect('/');
+        }
+
         if ($request->ajax())
         {
             $award = Award::find($id);
@@ -117,6 +134,10 @@ class AwardsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (Gate::denies('moder')) {
+            return redirect('/');
+        }
+
         if ($request->ajax())
         {
             $this->validate($request, [
@@ -163,9 +184,14 @@ class AwardsController extends Controller
      */
     public function destroy(Request $request, $id)
     {
+        if (Gate::denies('moder')) {
+            return redirect('/');
+        }
+
         if ($request->ajax())
         {
             $award = Award::find($id);
+            $award->board()->delete();
             Storage::delete($award->image);
             $award->delete();
         }

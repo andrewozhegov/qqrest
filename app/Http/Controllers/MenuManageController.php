@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Gate;
 
 use App\Notify;
 use App\Product;
@@ -19,22 +20,16 @@ class MenuManageController extends Controller
      */
     public function index()
     {
+        if (Gate::denies('staff')) {
+            return redirect('/');
+        }
+
         return view('manage.menu', [
             'products' => Product::all(),
             'types' => ProductType::all(),
             'board' => ProductBoard::products_all(),
             'notifies' => Notify::notifiesToArray()
         ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -45,6 +40,10 @@ class MenuManageController extends Controller
      */
     public function store(Request $request)
     {
+        if (Gate::denies('staff')) {
+            return redirect('/');
+        }
+
         if ($request->ajax())
         {
             $this->validate($request, [
@@ -103,6 +102,10 @@ class MenuManageController extends Controller
      */
     public function show(Request $request, $id)
     {
+        if (Gate::denies('staff')) {
+            return redirect('/');
+        }
+
         if ($request->ajax())
         {
             $product = Product::find($id);
@@ -111,6 +114,7 @@ class MenuManageController extends Controller
                 'type' => $product->type->type_name,
                 'image' => asset($product->image()),
                 'image1' => asset($product->image_big()),
+                'count' => $product->count,
                 'price' => $product->price,
                 'name' => $product->name
             ];
@@ -127,6 +131,10 @@ class MenuManageController extends Controller
      */
     public function edit(Request $request, $id)
     {
+        if (Gate::denies('staff')) {
+            return redirect('/');
+        }
+
         if ($request->ajax())
         {
             $product = Product::find($id);
@@ -154,12 +162,16 @@ class MenuManageController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (Gate::denies('staff')) {
+            return redirect('/');
+        }
+
         if ($request->ajax())
         {
             $this->validate($request, [
                 'name' => 'required',
-                'photo' => 'image',
-                'photo1' => 'image',
+                //'photo' => 'image',
+                //'photo1' => 'image',
                 'type' => 'required',
                 'count' => 'required',
                 'price' => 'required'
@@ -228,6 +240,10 @@ class MenuManageController extends Controller
      */
     public function destroy(Request $request, $id)
     {
+        if (Gate::denies('staff')) {
+            return redirect('/');
+        }
+
         if ($request->ajax())
         {
             $product = Product::find($id);

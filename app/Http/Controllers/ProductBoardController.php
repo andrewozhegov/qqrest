@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
+
 use App\Product;
 use App\ProductBoard;
-
 
 class ProductBoardController extends Controller
 {
@@ -16,6 +17,10 @@ class ProductBoardController extends Controller
      */
     public function update($id)
     {
+        if (Gate::denies('staff')) {
+            return redirect('/');
+        }
+
         $board = new ProductBoard();
         $award = Product::find($id);
         $award->board()->save($board);
@@ -29,6 +34,10 @@ class ProductBoardController extends Controller
      */
     public function destroy($id)
     {
+        if (Gate::denies('staff')) {
+            return redirect('/');
+        }
+
         Product::find($id)->board()->delete();
     }
 }

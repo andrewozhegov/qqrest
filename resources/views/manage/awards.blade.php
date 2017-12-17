@@ -31,7 +31,7 @@
                  <td class="rowName">{{ $award->name }}</td>
                  <td>
                      <div class="material-switch pull-left">
-                         <input type="checkbox" id="switch{{ $award->id }}" onclick="change_board('awards', {{ $award->id }})" @if (\App\AwardBoard::is_on_board($award)) checked="true" @endif/>
+                         <input type="checkbox" id="switch{{ $award->id }}" onclick="change_board('awardboard', {{ $award->id }})" @if (\App\AwardBoard::is_on_board($award)) checked="true" @endif/>
                          <label for="switch{{ $award->id }}" class="label-success"></label>
                      </div>
                  </td>
@@ -66,8 +66,13 @@
     <form onsubmit="add_item('awards')" enctype="multipart/form-data" class="form-horizontal" method="post" id="form_add_item" action="javascript:void(null);" >
         {{ csrf_field() }}
 
+        <!-- ПУСТЫЕ ПОЛЯ -->
         <input type="hidden" name="title" value="">
         <textarea style="display:none;" name="text"></textarea>
+        <select class="form-control hidden" name="type" id="form_select"></select>
+        <input type="number" class="form-control hidden" name="count" value="" id="form_topic" placeholder="">
+        <input type="number" class="form-control hidden" name="price" value="" id="form_num1" placeholder="">
+        <!-- -->
 
         <div class="form-group">
             <div class="col-md-12">
@@ -90,6 +95,11 @@
                 <input class="form-control btn btn-block btn-default" type="reset" value="Очистить">
             </div>
         </div>
+
+            <!-- ПУСТЫЕ ПОЛЯ -->
+            <input class="hidden" type="file" accept=".png,.jpeg,.jpg" name="photo1" id="form_photo1">
+            <!-- -->
+
     </form>
 @endsection
 
@@ -102,8 +112,13 @@
         {{-- форма добавления новой записи --}}
         {{ csrf_field() }}
 
-        <input type="hidden" name="title_upd" value="">
+        <!-- ПУСТЫЕ ПОЛЯ -->
+        <input type="hidden" name="title_upd" value=""/>
         <textarea style="display:none;" name="text_upd"></textarea>
+        <select class="form-control hidden" name="type_upd" id="form_select"></select>
+        <input type="number" class="form-control hidden" name="count_upd" value="" id="form_topic" placeholder="" />
+        <input type="number" class="form-control hidden" name="price_upd" value="" id="form_num1" placeholder="" />
+        <!-- -->
 
         <div class="form-group">
             <div class="col-md-12">
@@ -127,5 +142,10 @@
                 <input class="form-control btn btn-block btn-default" type="reset" value="Очистить">
             </div>
         </div>
+
+            <!-- ПУСТЫЕ ПОЛЯ -->
+            <input class="hidden" id="editModalImageNew" type="file" accept=".png,.jpeg,.jpg" name="photo1" />
+            <!-- ПУСТЫЕ ПОЛЯ -->
+
     </form>
 @endsection

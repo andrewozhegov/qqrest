@@ -57,13 +57,13 @@
                         <h6 class="text-right">{{ $new->created_at }}</h6>
                     </div>
                 @endforeach
-                <ul class="pagination">
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                </ul>
+                {{--<ul class="pagination">--}}
+                    {{--<li><a href="#">1</a></li>--}}
+                    {{--<li><a href="#">2</a></li>--}}
+                    {{--<li><a href="#">3</a></li>--}}
+                    {{--<li><a href="#">4</a></li>--}}
+                    {{--<li><a href="#">5</a></li>--}}
+                {{--</ul>--}}
             </section>
         </div>
     @endif

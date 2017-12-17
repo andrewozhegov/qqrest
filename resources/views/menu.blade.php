@@ -88,29 +88,15 @@
 
             <!-- Wrapper for slides -->
             <div class="carousel-inner heigdht-800">
-                <div class="item active">
-                    <img src="img/img1.jpg" alt="Los Angeles" style="width:100%;">
-                    <div class="carousel-caption">
-                        <h3>New York</h3>
-                        <p>The atmosphere in New York is lorem ipsum.</p>
+                @foreach($board as $item)
+                    <div class="item @if ($item->id == $board[0]->id) active @endif">
+                        <img src="{{ $item->image_big() }}" alt="{{ $item->name }}" style="width:100%;">
+                        <div class="carousel-caption">
+                            <h3>{{ $item->name }}</h3>
+                            <p>{{ $item->type->name }}</p>
+                        </div>
                     </div>
-                </div>
-
-                <div class="item">
-                    <img src="img/img2.jpg" alt="Chicago" style="width:100%;">
-                    <div class="carousel-caption">
-                        <h3>New York</h3>
-                        <p>The atmosphere in New York is lorem ipsum.</p>
-                    </div>
-                </div>
-
-                <div class="item">
-                    <img src="img/img3.jpg" alt="New york" style="width:100%;">
-                    <div class="carousel-caption">
-                        <h3>New York</h3>
-                        <p>The atmosphere in New York is lorem ipsum.</p>
-                    </div>
-                </div>
+                @endforeach
             </div>
 
             <!-- Left and right controls -->

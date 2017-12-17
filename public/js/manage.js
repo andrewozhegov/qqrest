@@ -47,6 +47,7 @@ function add_item(page) {
         },
         success: function ($response)
         {
+            alert($response);
             var html = '';
             switch (page)
             {
@@ -68,7 +69,7 @@ function add_item(page) {
                                '<td class="rowTitle">' + $response['name'] + '</td>\n'+
                                '<td>\n' +
                                    '<div class="material-switch pull-left">\n'+
-                                       '<input type="checkbox" id="switch' + $response['id'] + '" onclick="change_board(\'' + page + '\', ' + $response['id'] + ')" />\n' +
+                                       '<input type="checkbox" id="switch' + $response['id'] + '" onclick="change_board(\'awardboard\', ' + $response['id'] + ')" />\n' +
                                        '<label for="switch' + $response['id'] +'" class="label-success"></label>\n' +
                                    '</div>\n' +
                                '</td>\n' +
@@ -86,7 +87,7 @@ function add_item(page) {
                         '                <td class="rowCount">' + $response['count'] + '</td>\n' +
                         '                <td>\n' +
                         '                    <div class="material-switch pull-left">\n' +
-                        '                        <input type="checkbox" id="switch' + $response['id'] + '" onclick="change_board(\'' + page + '\', ' + $response['id'] + ')"/>' +
+                        '                        <input type="checkbox" id="switch' + $response['id'] + '" onclick="change_board(\'productboard\', ' + $response['id'] + ')"/>' +
                         '                        <label for="switch' + $response['id'] + '" class="label-success"></label>\n' +
                         '                    </div>\n' +
                         '                </td>\n' +
@@ -96,6 +97,7 @@ function add_item(page) {
                         '                    <button class="btn btn-danger" onclick="delete_item(\'' + page + '\', ' + $response['id'] + ')">Удалить</button>\n' +
                         '                </td>\n' +
                         '            </tr>'
+                    break;
                 }
                 case 'branches': {
                     html = '<tr id="row' + $response['id'] + '">\n' +
@@ -103,7 +105,7 @@ function add_item(page) {
                         '                <td class="rowTitle">' + $response['address'] + '</td>\n' +
                         '                <td>\n' +
                         '                    <div class="material-switch pull-left">\n' +
-                        '                        <input type="checkbox" id="switch' + $response['id'] + '" onclick="change_board(\'' + page + '\', ' + $response['id'] + ')"/>\n' +
+                        '                        <input type="checkbox" id="switch' + $response['id'] + '" onclick="change_board(\'branchboard\', ' + $response['id'] + ')"/>\n' +
                         '                        <label for="switch{{ $branch->id }}" class="label-success"></label>\n' +
                         '                    </div>\n' +
                         '                </td>\n' +
@@ -113,6 +115,7 @@ function add_item(page) {
                         '                    <button class="btn btn-danger" onclick="delete_item(\'' + page + '\', ' + $response['id'] + ')">Удалить</button>\n' +
                         '                </td>\n' +
                         '            </tr>';
+                    break;
                 }
             }
 

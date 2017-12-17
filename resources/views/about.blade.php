@@ -43,7 +43,7 @@
 
                 <div id="myCarousel" class="carousel slide" data-ride="carousel">
                     <!-- Indicators -->
-                    <ol class="carousel-indicators display-hidden">
+                    <ol class="carousel-indicators">
                         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
                         <li data-target="#myCarousel" data-slide-to="1"></li>
                         <li data-target="#myCarousel" data-slide-to="2"></li>
@@ -58,25 +58,22 @@
                                         <img src="{{ $service->image() }}" alt="{{ $service->title }}" style="width:100%;">
                                     </div>
                                     <div class="col-md-6 col-sm-12">
-                                        <h3 class="text-right">{{ $branch->title }}</h3>
-                                        <p class="text-right">{{ $branch->text }}</p>
+                                        <h3 class="text-right text" style="font-size: 40px">{{ $service->title }}</h3>
+                                        <br/>
+                                        <p class="text-right" style="font-size: 20px">{{ $service->text }}</p>
                                     </div>
                                 </div>
                             </div>
                         @endforeach
                     </div>
-                    <!-- Left and right controls
-                    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                    <!-- Left and right controls-->
+                    <a class="left carousel-control hidden" href="#myCarousel" data-slide="prev">
                         <span class="glyphicon glyphicon-chevron-left"></span>
                         <span class="sr-only">Previous</span>
                     </a>
-                    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                    <a class="right carousel-control hidden" href="#myCarousel" data-slide="next">
                         <span class="glyphicon glyphicon-chevron-right"></span>
                         <span class="sr-only">Next</span>
-                    </a>-->
-                    <a class="right carousel-control" href="#myCarousel" data-slide="next">
-                        <h3 class="text-right">{{ $branch->title }}</h3>
-                        <p class="text-right">{{ $branch->text }}</p>
                     </a>
                 </div>
             </section>

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
+
 use App\Branch;
 use App\BranchBoard;
 
@@ -15,6 +17,10 @@ class BranchBoardController extends Controller
      */
     public function update($id)
     {
+        if (Gate::denies('admin')) {
+            return redirect('/');
+        }
+
         $board = new BranchBoard();
         $brunch = Branch::find($id);
         $brunch->board()->save($board);
@@ -28,6 +34,10 @@ class BranchBoardController extends Controller
      */
     public function destroy($id)
     {
+        if (Gate::denies('admin')) {
+            return redirect('/');
+        }
+
         Branch::find($id)->board()->delete();
     }
 }

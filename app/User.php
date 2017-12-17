@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Gate;
 
 class User extends Authenticatable
 {
@@ -41,5 +42,17 @@ class User extends Authenticatable
 
     public function image() {
         return 'storage/'.$this->image;
+    }
+
+    public function is_moder() {
+        return Gate::allows('moder');
+    }
+
+    public function is_staff() {
+        return Gate::allows('staff');
+    }
+
+    public function is_admin() {
+        return Gate::allows('admin');
     }
 }

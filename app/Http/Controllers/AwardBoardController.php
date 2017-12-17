@@ -15,6 +15,10 @@ class AwardBoardController extends Controller
      */
     public function update($id)
     {
+        if (Gate::denies('moder')) {
+            return redirect('/');
+        }
+
         $board = new AwardBoard();
         $award = Award::find($id);
         $award->board()->save($board);
@@ -28,6 +32,10 @@ class AwardBoardController extends Controller
      */
     public function destroy($id)
     {
+        if (Gate::denies('moder')) {
+            return redirect('/');
+        }
+
         Award::find($id)->board()->delete();
     }
 }

@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Gate;
+
 use App\Branch;
 use App\BranchBoard;
 use App\Notify;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class BranchesController extends Controller
 {
@@ -17,6 +19,10 @@ class BranchesController extends Controller
      */
     public function index()
     {
+        if (Gate::denies('admin')) {
+            return redirect('/');
+        }
+
         return view('manage.branches', [
             'branches' => Branch::all(),
             'board' => BranchBoard::branch_all(),
@@ -32,6 +38,10 @@ class BranchesController extends Controller
      */
     public function store(Request $request)
     {
+        if (Gate::denies('admin')) {
+            return redirect('/');
+        }
+
         if ($request->ajax())
         {
             $this->validate($request, [
@@ -79,6 +89,10 @@ class BranchesController extends Controller
      */
     public function show(Request $request, $id)
     {
+        if (Gate::denies('admin')) {
+            return redirect('/');
+        }
+
         if ($request->ajax())
         {
             $branch = Branch::find($id);
@@ -102,6 +116,10 @@ class BranchesController extends Controller
      */
     public function edit(Request $request, $id)
     {
+        if (Gate::denies('admin')) {
+            return redirect('/');
+        }
+
         if ($request->ajax())
         {
             $branch = Branch::find($id);
@@ -127,6 +145,10 @@ class BranchesController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (Gate::denies('admin')) {
+            return redirect('/');
+        }
+
         if ($request->ajax())
         {
             $this->validate($request, [
@@ -190,6 +212,10 @@ class BranchesController extends Controller
      */
     public function destroy(Request $request, $id)
     {
+        if (Gate::denies('admin')) {
+            return redirect('/');
+        }
+
         if ($request->ajax())
         {
             $branch = Branch::find($id);

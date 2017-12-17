@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+
 use App\Notify;
 use App\Role;
 use App\StaffBoard;
 use App\User;
-use Illuminate\Http\Request;
 
 class StaffController extends Controller
 {
@@ -17,6 +19,10 @@ class StaffController extends Controller
      */
     public function index()
     {
+        if (Gate::denies('admin')) {
+            return redirect('/');
+        }
+
         return view('manage.staff', [
             'users' => User::all(),
             'roles' => Role::all(),
@@ -33,6 +39,10 @@ class StaffController extends Controller
      */
     public function show(Request $request, $id)
     {
+        if (Gate::denies('admin')) {
+            return redirect('/');
+        }
+
         if ($request->ajax())
         {
             $user = User::find($id);
@@ -55,6 +65,10 @@ class StaffController extends Controller
      */
     public function edit(Request $request, $id)
     {
+        if (Gate::denies('admin')) {
+            return redirect('/');
+        }
+
         if ($request->ajax())
         {
             $user = User::find($id);
@@ -77,6 +91,10 @@ class StaffController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (Gate::denies('admin')) {
+            return redirect('/');
+        }
+
         if ($request->ajax())
         {
             $this->validate($request, [
@@ -108,6 +126,10 @@ class StaffController extends Controller
      */
     public function destroy(Request $request, $id)
     {
+        if (Gate::denies('admin')) {
+            return redirect('/');
+        }
+
         if ($request->ajax())
         {
             $user = User::find($id);

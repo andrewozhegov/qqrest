@@ -45,7 +45,11 @@
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="/profile">Профиль</a></li>
-                            <li><a href="/manage/news">Управление @if( $notifies['count'] > 0) <span class="text-right badge">{{ $notifies['count'] }}</span> @endif</a></li>
+                            @if (Auth::user()->is_moder())
+                            <li>
+                                <a href="/manage/news">Управление @if( $notifies['count'] > 0) <span class="text-right badge">{{ $notifies['count'] }}</span> @endif</a>
+                            </li>
+                            @endif
                             <li>
                                 <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Выйти</a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -113,6 +117,7 @@
                 <div class="col-md-3 col-sm-12 col-md-pull-9">
                     <div class="fh5co-footer-logo"><a href="index.html">QQ</a></div>
                     <p><small>&copy; 2017. Все права защищены.</small></p>
+                    <div id="ytWidget"></div>
                 </div>
 
             </div>
@@ -122,6 +127,7 @@
 
 <script src="{{ asset("/js/jquery.min.js") }}"></script>
 <script src="{{ asset("/js/bootstrap.min.js") }}"></script>
+<script src="https://translate.yandex.net/website-widget/v1/widget.js?widgetId=ytWidget&pageLang=ru&widgetTheme=light&autoMode=false" type="text/javascript"></script>
 
 @yield('js')
 

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
+
 use App\Notify;
 use App\Event;
 use Illuminate\Http\Request;
@@ -15,33 +17,16 @@ class EventsController extends Controller
      */
     public function index()
     {
+        if (Gate::denies('staff')) {
+            return redirect('/');
+        }
+
         Notify::all()->where('page', '=', 'events')->first()->update(['count' => 0]);
 
         return view('manage.events', [
             'events' => Event::all(),
             'notifies' => Notify::notifiesToArray()
         ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
@@ -52,6 +37,10 @@ class EventsController extends Controller
      */
     public function show(Request $request, $id)
     {
+        if (Gate::denies('staff')) {
+            return redirect('/');
+        }
+
         if ($request->ajax())
         {
             $event = Event::find($id);
@@ -79,17 +68,6 @@ class EventsController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  int  $id
@@ -97,6 +75,10 @@ class EventsController extends Controller
      */
     public function update($id)
     {
+        if (Gate::denies('staff')) {
+            return redirect('/');
+        }
+
         $event = Event::find($id);
 
         $event->update([
@@ -114,6 +96,10 @@ class EventsController extends Controller
      */
     public function destroy(Request $request, $id)
     {
+        if (Gate::denies('staff')) {
+            return redirect('/');
+        }
+
         if ($request->ajax())
         {
             $event = Event::find($id);

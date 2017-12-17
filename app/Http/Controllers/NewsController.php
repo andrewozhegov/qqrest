@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -17,6 +18,10 @@ class NewsController extends Controller
      */
     public function index()
     {
+        if (Gate::denies('moder')) {
+            return redirect('/');
+        }
+
         return view('manage.news', [
             'news' => News::all(),
             'notifies' => Notify::notifiesToArray()
@@ -31,6 +36,10 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
+        if (Gate::denies('moder')) {
+            return redirect('/');
+        }
+
         if ($request->ajax())
         {
             $this->validate($request, [
@@ -74,6 +83,10 @@ class NewsController extends Controller
      */
     public function show(Request $request, $id)
     {
+        if (Gate::denies('moder')) {
+            return redirect('/');
+        }
+
         if ($request->ajax())
         {
             $news = News::find($id);
@@ -97,6 +110,10 @@ class NewsController extends Controller
      */
     public function edit(Request $request, $id)
     {
+        if (Gate::denies('moder')) {
+            return redirect('/');
+        }
+
         if ($request->ajax())
         {
             $news = News::find($id);
@@ -121,6 +138,10 @@ class NewsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (Gate::denies('moder')) {
+            return redirect('/');
+        }
+
         if ($request->ajax())
         {
             $this->validate($request, [
@@ -170,6 +191,10 @@ class NewsController extends Controller
      */
     public function destroy(Request $request, $id)
     {
+        if (Gate::denies('moder')) {
+            return redirect('/');
+        }
+
         if ($request->ajax())
         {
             $news = News::find($id);

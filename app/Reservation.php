@@ -11,6 +11,8 @@ class Reservation extends Model
     protected $fillable = ['client_name', 'client_phone', 'date_time', 'done'];
 
     public function branch () {
-        return $this->belongsTo('App\Branch', 'brunch_id', 'id');
+        return $this->belongsTo('App\Branch', 'branch_id', 'id');
     }
+
+
 }

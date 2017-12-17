@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+
 use App\StaffBoard;
 use App\User;
-use Illuminate\Http\Request;
 
 class StaffBoardController extends Controller
 {
@@ -16,6 +18,10 @@ class StaffBoardController extends Controller
      */
     public function update($id)
     {
+        if (Gate::denies('admin')) {
+            return redirect('/');
+        }
+
         $board = new StaffBoard();
         $user = User::find($id);
         $user->board()->save($board);
@@ -29,6 +35,10 @@ class StaffBoardController extends Controller
      */
     public function destroy($id)
     {
+        if (Gate::denies('admin')) {
+            return redirect('/');
+        }
+
         User::find($id)->board()->delete();
     }
 }
