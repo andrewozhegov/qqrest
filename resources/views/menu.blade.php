@@ -3,23 +3,12 @@
 @section('page_name', 'Меню')
 
 @section('css')
-    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="{{ asset("css/menu.css") }}">
 @endsection
 
 @section('js')
-    <script>
-        $(document).ready(function() {
-            $("#myInput").on("keyup", function() {
-                var value = $(this).val().toLowerCase();
-                $("#myDIV div").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
-        });
-    </script>
-
-    <script src="js/cart.js"></script>
-
+    <script src="{{ asset("js/menu.js") }}"></script>
+    <script src="{{ asset("js/cart.js") }}"></script>
 @endsection
 
 @section('content')
@@ -27,26 +16,26 @@
         <section class="row menu-title">
             <ul class="menu clearfix">
                 <li class="parent">
-                    <a href="">БЛЮДА</a>
+                    <a href="#" onclick="add_to_search('блюдо')">БЛЮДА</a>
                     <ul class="children">
-                        <li><a href="">Первые</a></li>
-                        <li><a href="">Вторые</a></li>
-                        <li><a href="">Диетические</a></li>
+                        <li><a href="#" onclick="add_to_search('первое')">Первые</a></li>
+                        <li><a href="#" onclick="add_to_search('второе')">Вторые</a></li>
+                        <li><a href="#" onclick="add_to_search('диетическое')">Диетические</a></li>
                     </ul>
                 </li>
                 <li class="parent">
-                    <a href="">НАПИТКИ</a>
+                    <a href="#" onclick="add_to_search('напитки')">НАПИТКИ</a>
                     <ul class="children">
-                        <li><a href="">Алкогольные</a></li>
-                        <li><a href="">Безалкогольные</a></li>
+                        <li><a href="#" onclick="add_to_search(' алкогольные')">Алкогольные</a></li>
+                        <li><a href="#" onclick="add_to_search('безалкогольные')">Безалкогольные</a></li>
                     </ul>
                 </li>
-                <li><a href="">ДЕСЕРТЫ</a></li>
+                <li><a href="#" onclick="add_to_search('дисерты')">ДЕСЕРТЫ</a></li>
             </ul>
         </section>
 
         <div class="article-menu">
-            <h1> М Е Н Ю</h1>
+            <h1>М Е Н Ю</h1>
             <br />
             <input  class="form-control" id="myInput" type="text" placeholder="Search..">
         </div>
