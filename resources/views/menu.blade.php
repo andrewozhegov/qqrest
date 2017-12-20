@@ -93,7 +93,7 @@
                         <img src="{{ $item->image_big() }}" alt="{{ $item->name }}" style="width:100%;">
                         <div class="carousel-caption">
                             <h3>{{ $item->name }}</h3>
-                            <p>{{ $item->type->name }}</p>
+                            <p>{{ $item->type->type_name }}</p>
                         </div>
                     </div>
                 @endforeach

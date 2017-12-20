@@ -82,7 +82,7 @@ class ReviewsController extends Controller
 
             $resp = [
                 'id' => $item->id,
-                'text' => $item->text,
+                'text' => $item->user->name,
                 'updated_at' => ''.$item->updated_at
             ];
 

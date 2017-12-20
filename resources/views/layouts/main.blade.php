@@ -81,29 +81,29 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-3 col-sm-4 col-md-push-3">
-                    <h3>About</h3>
+                    <h3>МЕНЮ</h3>
                     <ul>
-                        <li><a href="#">Tour</a></li>
-                        <li><a href="#">Company</a></li>
-                        <li><a href="#">Jobs</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">New Features</a></li>
-                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Главная</a></li>
+                        <li><a href="#">О нас</a></li>
+                        <li><a href="#">Меню</a></li>
+                        <li><a href="#">Корзина</a></li>
+                        <li><a href="#">Мероприятия</a></li>
+                        <li><a href="#">Бронирование</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3 col-sm-4 col-md-push-3">
-                    <h3>Support</h3>
+                    <h3>КОНТАКТЫ</h3>
                     <ul>
-                        <li><a href="#">Help Center</a></li>
-                        <li><a href="#">Terms of Service</a></li>
-                        <li><a href="#">Security</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">More Apps</a></li>
+                        <li><a href="#">тел. +79788854322</a></li>
+                        <li><a href="#">ВКонтакте</a></li>
+                        <li><a href="#">Телеграм</a></li>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Google+</a></li>
+                        <li><a href="#">Twitter</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3 col-sm-4 col-md-push-3">
-                    <h3>More Links</h3>
+                    <h3>НАШИ ПАРТНЕРЫ</h3>
                     <ul>
                         <li><a href="#">Feedback</a></li>
                         <li><a href="#">Frequently Ask Questions</a></li>
@@ -111,12 +111,14 @@
                         <li><a href="#">Privacy Policy</a></li>
                         <li><a href="#">Careers</a></li>
                         <li><a href="#">More Apps</a></li>
- ц                   </ul>
+                    </ul>
                 </div>
 
                 <div class="col-md-3 col-sm-12 col-md-pull-9">
-                    <div class="fh5co-footer-logo"><a href="index.html">QQ</a></div>
+                    <h3>QQ</h3>
+                    {{--<div class="fh5co-footer-logo"><a href="index.html">QQ</a></div>--}}
                     <p><small>&copy; 2017. Все права защищены.</small></p>
+                    <br />
                     <div id="ytWidget"></div>
                 </div>
 

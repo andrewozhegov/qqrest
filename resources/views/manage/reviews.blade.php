@@ -7,6 +7,15 @@
 
 @section('js')
     <script src="{{ asset("js/manage.js") }}"></script>
+    <script src="{{ asset("js/reviews.js") }}"></script>
+    <script src="{{ asset("tinymce/tinymce.min.js") }}"></script>
+    <script>
+        tinymce.init({
+            selector:'textarea',
+            height: 500,
+            plugins: 'image link save'
+        });
+    </script>
 @endsection
 
 
@@ -17,7 +26,7 @@
         <thead>
         <tr>
             <th>Дата</th>
-            <th>Текст</th>
+            <th>Автор</th>
             <th>Управление</th>
         </tr>
         </thead>
@@ -25,9 +34,9 @@
         @foreach($reviews as $review)
             <tr id="row{{ $review->id }}">
                 <td class="rowDate">{{ $review->created_at }}</td>
-                <td class="rowText">{{ $review->text }}</td>
+                <td class="rowText">{{ $review->user->name }}</td>
                 <td class="btn-group-xs">
-                    <button class="btn btn-warning" onclick="edit_item('reviews', {{ $review->id }})">Изменить</button>
+                    <button class="btn btn-warning" onclick="edit_review({{ $review->id }})">Изменить</button>
                     <button class="btn btn-danger" onclick="delete_item('reviews', {{ $review->id }})">Удалить</button>
                 </td>
             </tr>
@@ -75,7 +84,7 @@
 @section('name-of-edit-modal', 'Редактировать отзыв')
 
 @section('body-of-edit-modal')
-    <form onsubmit="update_item()" enctype="multipart/form-data" class="form-horizontal" method="put" id="form_edit_item" action="javascript:void(null);" >
+    <form onsubmit="update_review()" enctype="multipart/form-data" class="form-horizontal" method="put" id="form_edit_item" action="javascript:void(null);" >
         {{-- форма добавления новой записи --}}
         {{ csrf_field() }}
 

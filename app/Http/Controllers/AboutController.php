@@ -29,21 +29,36 @@ class AboutController extends Controller
 
     public function review(Request $request)
     {
-        $this->validate($request, [
-            'comment' => 'required'
-        ]);
+        if($request->ajax())
+        {
+            $this->validate($request, [
+                'comment' => 'required'
+            ]);
 
-        $review = new Review([
-            'text' => $request->get('comment')
-        ]);
+            $user = Auth::user();
 
-        Auth::user()->reviews()->save($review);
+            $review = new Review([
+                'text' => $request->get('comment')
+            ]);
 
-        $notification = Notify::all()->where('page', '=', 'reviews')->first();
-        $notification->update([
-            'count' => ++$notification->count
-        ]);
+            $temp = $user->reviews()->save($review);
 
-        return redirect('about');
+
+            $notification = Notify::all()->where('page', '=', 'reviews')->first();
+            $notification->update([
+                'count' => ++$notification->count
+            ]);
+
+            $resp = [
+                'user_image' => asset($user->image()),
+                'user_name' => $user->name,
+                'review_text' => $review->text,
+                'review_created_at' => ''.$review->created_at
+            ];
+
+            //return redirect('about');
+            return $resp;
+        }
+
     }
 }
