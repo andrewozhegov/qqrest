@@ -18,12 +18,4 @@ class MenuController extends Controller
             'notifies' => Notify::notifiesToArray()
         ]);
     }
-
-    public function add(Request $request)
-    {
-        if($request->ajax()) {
-            // вот тут будет обработчик добавления заказа
-            return '+++';
-        }
-    }
 }

@@ -12,7 +12,8 @@
         tinymce.init({
             selector:'textarea',
             height: 500,
-            plugins: 'image link save'
+            plugins: 'image link save',
+            entity_encoding : "raw"
         });
     </script>
 @endsection
@@ -27,7 +28,7 @@
 
         @if(count($branches) > 0)
             <section>
-                <h1 class="text-center">ФИЛЛИАЛЫ</h1>
+                <h1 class="text-center"><a name="branches">ФИЛЛИАЛЫ</a></h1>
                 <div class="row text-center">
                     @foreach($branches as $branch)
                         <div class="col-sm-4">
@@ -46,9 +47,8 @@
         @endif
 
         @if(count($services) > 0)
-            <section>
-                <h1 class="text-center">ОБСЛУЖИВАНИЕ КЛИЕНТОВ</h1>
-
+            <section >
+                <h1 class="text-center"><a name="services">ОБСЛУЖИВАНИЕ КЛИЕНТОВ</a></h1>
 
                 <div id="myCarousel" class="carousel slide" data-ride="carousel">
                     <!-- Indicators -->
@@ -90,7 +90,7 @@
 
         @if(count($services) > 0)
             <section>
-                <h1 class="text-center">НАШИ ПОБЕДЫ</h1>
+                <h1 class="text-center"><a name="awards">НАШИ ПОБЕДЫ</a></h1>
                 <div class="row text-center">
                     @foreach($awards as $award)
                         <div class="col-sm-4">
@@ -109,7 +109,7 @@
 
         @if(count($staffs) > 0)
             <section>
-                <h1 class="text-center">ПЕРСОНАЛ</h1>
+                <h1 class="text-center"><a name="staff">ПЕРСОНАЛ</a></h1>
                 <div class="container text-center">
                     <div class="row">
                         @foreach($staffs as $staff)
@@ -129,6 +129,7 @@
         @endif
 
         <section>
+            <h1 class="text-center"><a name="reviews">ОТЗЫВЫ</a></h1>
             <div id="reviews_block">
                 @foreach($reviews as $review)
                     <div class="media">
@@ -145,7 +146,7 @@
             </div>
 
             @if(Auth::check())
-                    <button type="button" class="btn btn-info btn-lg article" data-toggle="modal" data-target="#editModal">Оставить отзыв</button>
+                    <button type="button" class="btn btn-danger btn-lg article" data-toggle="modal" data-target="#editModal">Оставить отзыв</button>
             @else
                 <p>Войдите или зарегистрируйтесь, чтобы оставить коментарий!</p>
             @endif

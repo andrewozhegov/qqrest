@@ -18,18 +18,19 @@
     <nav class="navbar navbar-inverse ">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="/">QQ</a>
+                <a class="navbar-brand tomato-red" href="/">QQ</a>
             </div>
             <ul class="nav navbar-nav">
-                <li class="active"><a href="/">Главная страница</a></li>
+                <li><a href="/">Главная страница</a></li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">О нас
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="/about">Филлиалы</a></li>
-                        <li><a href="/about">Достижения</a></li>
-                        <li><a href="/about">Достижения</a></li>
-                        <li><a href="/about">Отзывы</a></li>
+                        <li><a href="/about#branches">Филлиалы</a></li>
+                        <li><a href="/about#services">Обслуживание</a></li>
+                        <li><a href="/about#awards">Достижения</a></li>
+                        <li><a href="/about#staff">Персонал</a></li>
+                        <li><a href="/about#reviews">Отзывы</a></li>
                     </ul>
                 </li>
                 <li><a href="/menu">Меню</a></li>
@@ -44,7 +45,7 @@
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ Auth::user()->name }}
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/profile">Профиль</a></li>
+                            <li><a href="#"><s>Профиль</s></a></li>
                             @if (Auth::user()->is_moder())
                             <li>
                                 <a href="/manage/news">Управление @if( $notifies['count'] > 0) <span class="text-right badge">{{ $notifies['count'] }}</span> @endif</a>
@@ -81,8 +82,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-3 col-sm-4 col-md-push-3">
-                    <h3>МЕНЮ</h3>
-                    <ul>
+                    <h3 class="tomato-red">МЕНЮ</h3>
+                    <ul class="footer-ul">
                         <li><a href="#">Главная</a></li>
                         <li><a href="#">О нас</a></li>
                         <li><a href="#">Меню</a></li>
@@ -92,8 +93,8 @@
                     </ul>
                 </div>
                 <div class="col-md-3 col-sm-4 col-md-push-3">
-                    <h3>КОНТАКТЫ</h3>
-                    <ul>
+                    <h3 class="tomato-red">КОНТАКТЫ</h3>
+                    <ul class="footer-ul">
                         <li><a href="#">тел. +79788854322</a></li>
                         <li><a href="#">ВКонтакте</a></li>
                         <li><a href="#">Телеграм</a></li>
@@ -103,8 +104,8 @@
                     </ul>
                 </div>
                 <div class="col-md-3 col-sm-4 col-md-push-3">
-                    <h3>НАШИ ПАРТНЕРЫ</h3>
-                    <ul>
+                    <h3 class="tomato-red">НАШИ ПАРТНЕРЫ</h3>
+                    <ul class="footer-ul">
                         <li><a href="#">Feedback</a></li>
                         <li><a href="#">Frequently Ask Questions</a></li>
                         <li><a href="#">Terms of Service</a></li>
@@ -115,7 +116,7 @@
                 </div>
 
                 <div class="col-md-3 col-sm-12 col-md-pull-9">
-                    <h3>QQ</h3>
+                    <h3 class="tomato-red">QQ</h3>
                     {{--<div class="fh5co-footer-logo"><a href="index.html">QQ</a></div>--}}
                     <p><small>&copy; 2017. Все права защищены.</small></p>
                     <br />
